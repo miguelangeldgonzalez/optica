@@ -1,6 +1,6 @@
 import { Router } from "./router.js";
-import { validator } from "./../validation.middleware.js";
 import { createUserSchema } from "../schemas/user.schema.js";
+import { validator } from "../middlewares/validation.middleware.js";
 
 const router = new Router("users");
 
