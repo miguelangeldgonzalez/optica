@@ -1,0 +1,45 @@
+main {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+}
+
+.login-form__container {
+    width: 50%;
+    background-color: var(--black-bg-box);
+    padding: 40px 0;
+}
+
+.login-form__form h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+}
+
+.login-form__form {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.form-input__container {
+    gap: 10px;
+    display: flex;
+    flex-flow: column;
+}
+
+.form-input__recovery {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2px;
+}
+.form-input__recovery a {
+    transition: .5s;
+    color: rgb(83, 83, 83);
+}
+.form-input__recovery a:hover{
+    color: gray;
+}

@@ -1,0 +1,79 @@
+:root {
+    --black-bg: #232323;
+    --black-bg-box: #1d1d1d;
+
+    --input-normal: #13719c;
+    --input-selected: #00adff;
+
+    --warning: #fd8e32;
+
+    --danger: #fc2222;
+    --danger-selected: #ad4444;
+}
+
+html {
+    background-color: var(--black-bg);
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+input {
+    font-size: 1rem;
+}
+
+html, body, input, p {
+    font-family: 'Roboto';
+}
+
+main {
+    width: 100%;
+}
+
+/* --------------------- Estilos para botones */
+.input-form {
+    background-color: var(--black-bg-box);
+    color: white;
+    border-color: var(--input-normal);
+    transition: .2s;
+    border-style: solid;
+    padding: 10px;
+    border-radius: 5px
+}
+.input-form:focus-visible {
+    outline: none;
+    border-color: var(--input-selected);
+}
+
+input.warning, input.danger:hover {
+    border-color: var(--warning);
+}
+input.warning:focus-visible {
+    border-color: var(--warning-selected);
+}
+
+input.danger, input.danger:hover {
+    border-color: var(--danger)
+}
+input.danger:focus-visible {
+    border-color: var(--danger-selected)
+}
+
+/* Botones */
+
+.btn-primary {
+    font-size: 1rem;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: var(--input-normal);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: .5s
+}
+.btn-primary:hover{
+    background-color: var(--input-selected);
+}
