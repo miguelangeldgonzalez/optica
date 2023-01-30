@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <title>login y registro</title>
+</head>
+
+<body>
+
+
+    <div class="container-form sign-up">
+        <div class="bienvenido-de-nuevo">
+            <div class="message">
+                <h2>Bienvenido a optiluz</h2>
+                <p>Si ya tienes una cuenta, por favor haz click aqui</p>
+                <button class="sign-up-btn">Iniciar Sesion</button>
+            </div>
+        </div>
+        <form class="formulario"  action="" method="POST" id="form" >
+            <h2 class="registro">Crear una cuenta</h2>
+            <div class="iconos">
+                <div class="border-icon">
+                    <i class='bx bxl-instagram'></i>
+                </div>
+                <div class="border-icon">
+                    <i class='bx bxl-linkedin' ></i>
+                </div>
+                <div class="border-icon">
+                    <i class='bx bxl-facebook-circle' ></i>
+                </div>
+            </div> 
+            <p class="cuenta-free">Crear una cuenta</p>
+            <input type="text" name="" id="name" placeholder="Nombre">
+            <input type="email" name="" id="email" placeholder="Email">
+            <input type="password" name="" id="password" placeholder="Contraseña">
+            <input type="submit"  value="Registrarse">
+            <p class="warnings" id="warnings"></p>
+        </form>
+    </div>
+
+
+    <div class="container-form sign-in">
+        <form class="formulario"  >
+            <h2 class="registro">Iniciar Sesion</h2>
+            <div class="iconos">
+                <div class="border-icon">
+                    <i class='bx bxl-instagram'></i>
+                </div>
+                <div class="border-icon">
+                    <i class='bx bxl-linkedin' ></i>
+                </div>
+                <div class="border-icon">
+                    <i class='bx bxl-facebook-circle' ></i>
+                </div>
+            </div>
+            <p class="cuenta-free">¿Aun no tienes una cuenta?</p>
+            <input type="email"  placeholder="Email">
+            <input type="password"  placeholder="Contraseña">
+            <input type="button" value="Iniciar Sesion">
+        </form>
+
+
+        <div class="bienvenido-de-nuevo">
+            <div class="message">
+                <h2>Bienvenido de nuevo</h2>
+                <p>Si aun no tienes una cuenta por favor registrese aqui</p>
+                <button class="sign-in-btn">Registrarse</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="script2.js" ></script>
+
+</body>
+
+</html>
