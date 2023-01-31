@@ -1,9 +1,21 @@
-import loadPage from "./render.js";
+import { Render } from "./render.js";
+
+import Login from "./frontend/pages/js/login.js";
+import NotFound from "./frontend/pages/js/notFound.js";
+import Registro from "./frontend/pages/js/registro.js";
 
 const pages = [
     {
-        name: 'login',
-        route: '/'
+        route: '/registro',
+        module: new Registro()
+    },
+    {
+        route: '/',
+        module: new Login()
+    },
+    {
+        route: '/404',
+        module: new NotFound()
     }
 ]
 
@@ -20,4 +32,4 @@ FormData.extract = selector => {
     return object;
 }
 
-window.addEventListener('load', () => loadPage(pages));
+window.addEventListener('load', () => Render.loadPage(pages));

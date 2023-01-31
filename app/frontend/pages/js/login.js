@@ -13,8 +13,7 @@ function login() {
 
 export default class Login extends Init {
     constructor() {
-        super("login");
-        return this;
+        super();
     }
 
     events() {

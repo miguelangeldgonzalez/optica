@@ -1,6 +1,7 @@
 export default class Init {
-    constructor(name) {
-        this.name = name;
+    constructor() {
+        const name = this.constructor.name;
+        this.name = name[0].toLowerCase() + name.substring(1);
     }
     
     async getContent() {

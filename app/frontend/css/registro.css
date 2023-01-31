@@ -18,7 +18,7 @@ body {
     display:flex;
     align-items:center;
     justify-content:center;
-    background-image: url(-lago-montañas.jpeg);
+    background-image: url('./../assets//-lago-montañas.jpeg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
