@@ -31,7 +31,7 @@ export default class Usuario extends Init {
 
 Para cargar el html de la página debe crear un archivo ```.html``` en la carpeta **app\frontend\pages\html** con el mismo nombre de la clase pero sin la primera letra mayúscula, lo mismo para crear un archivo ```.css``` en la carpeta **app\frontend\css**, por ejemplo, para la clase ```Usuario``` crear un archivo llamado **usuario.html** y otro llamado **usuario.css**. No es necesario cargar los scripts ni las hojas de estilo en el archivo ```.html``` el programa lo hará automáticamente.
 
-### Assets
+### **Assets**
 
 Todas las fuentes, imáges e iconos deben estar contenidos dentro de la carpeta **app\frontend\assets**. Dentro de esa carpeta hay una subcarpeta para cada tipo de asset correspondiente.
 
@@ -49,3 +49,55 @@ El tipo de cambio puede ser ```ADD | FIX | CHG```
 Y por último el mensaje explicando muy brevemente lo que hiciste. Por ejemplo, si habia un bug que hacía que una página no cargar entonces escribir:
 
  ```[frontend] FIX Pagina de usuarios no cargaba```
+
+## Sistema de Diseño
+
+### **Tipografías**
+
+La tipografía del sitio será [Mulish](https://fonts.google.com/specimen/Mulish).
+
+Todos los tamaños de los textos deben ser medidos ```rem``` y todos los tamaños deben estar predefinidos por etiquetas, no por clases. Es decir, que hay que evitar esto:
+
+```
+.any-class a {
+    font-size: 24px;
+}
+```
+
+En su lugar escribir en el archivo **app\frontend\css\_vars.css** el tamaño para todas esas etiquetas de texto, por ejemplo, para colocar todos los h1 en 2.5rem, entonces hacer esto:
+
+```
+h1 {
+    font-size: 2.5rem;
+}
+```
+
+Tener cuidado de no sobreescribir los valores globales al diseñar componentes.
+
+#### **Tamaños de Etiquetas y Caracteristicas**
+
+| Etiqueta | Peso   | Tamaño  |
+| -------- | ------ | ------- |
+| h1       | bold   | 3rem    |
+| h2       | bold   | 1.5rem  |
+| h3       | bold   | 1.25rem |
+| p        | normal | 1rem    |
+| small    | normal | 0.8rem  |
+
+**Nota:** El objetivo de usar rem, en vez de cualquier otra unidad es por cuestiones de accesibilidad, por otro lado el hecho de declarar el peso y el tamaño de los textos en las etiquetas principales es por simplificación y seguimiento.
+
+### **Colores**
+
+Los colores se clasifican por su intención en el sistema.
+
+#### **De Acción**
+
+Para elementos que requieran de acciones del usuario como aceptar, eliminar, editar, etc.
+
+<rectangle style="
+        widht:40px; 
+        heigth=40px; 
+        background-color:red;
+        color: red;
+        border-radius: 20px
+">---------------</rectangle> Primario
