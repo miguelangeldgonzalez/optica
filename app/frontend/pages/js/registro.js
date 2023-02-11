@@ -1,11 +1,19 @@
 import Init from "./init.js";
 
+import router from "../../../backend/routes/index.js";
+
 export default class Registro extends Init {
     constructor () {
         super();
     }
 
     events() {
+        const data = new FormData();
+        data.append("name", "Miguel");
+        router.execRoute('api/users/create', data).then(response => {
+            console.log(response)
+        })
+
         const $btnSignIn= document.querySelector('.sign-in-btn'),
               $btnSignUp = document.querySelector('.sign-up-btn'),  
               $signUp = document.querySelector('.sign-up'),

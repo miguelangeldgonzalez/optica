@@ -94,10 +94,6 @@ Los colores se clasifican por su intención en el sistema.
 
 Para elementos que requieran de acciones del usuario como aceptar, eliminar, editar, etc.
 
-<rectangle style="
-        widht:40px; 
-        heigth=40px; 
-        background-color:red;
-        color: red;
-        border-radius: 20px
-">---------------</rectangle> Primario
+**Primario**: Para acciones que quiera hacer el usuario como continuar y acepatar.
+
+![text](./docAssets/circle.svg) 

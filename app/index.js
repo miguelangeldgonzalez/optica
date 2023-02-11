@@ -6,12 +6,8 @@ import Registro from "./frontend/pages/js/registro.js";
 
 const pages = [
     {
-        route: '/registro',
-        module: new Registro()
-    },
-    {
         route: '/',
-        module: new Login()
+        module: new Registro()
     },
     {
         route: '/404',
@@ -19,13 +15,22 @@ const pages = [
     }
 ]
 
-
-FormData.extract = selector => {
+FormData.extractFromElement = selector => {
     const object = {};
     const element = document.querySelector(selector);
     const formData = new FormData(element);
 
     for(const entri of formData.entries()) {
+        object[entri[0]] = entri[1];
+    }
+
+    return object;
+}
+
+FormData.extractFromObject = data => {
+    const object = {};
+
+    for(const entri of data.entries()) {
         object[entri[0]] = entri[1];
     }
 

@@ -1,6 +1,6 @@
 import Model from './../db/Model.js';
 
-class Users extends Model {
+class User extends Model {
     constructor() {
         const columns = [
             {
@@ -28,6 +28,4 @@ class Users extends Model {
     }
 }
 
-const User = new Users();
-
-export default User;
+export default new User();
