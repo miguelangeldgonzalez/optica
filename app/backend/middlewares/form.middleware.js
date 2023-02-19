@@ -7,8 +7,10 @@ export function formTransformObject(req) {
 
 export function formTransformElement(req) {
     if (req.element) try {
-        req = {
-            ...FormData.extractFromElement(req.element),
+        return {
+            body: {
+                ...FormData.extractFromElement(req.element),
+            },
             editRequest: true
         }
     } catch(e) {

@@ -2,10 +2,11 @@
 
 require('./link.php');
 
+$_POST = json_decode(trim(file_get_contents("php://input")), true);
+
 $query = '';
 
 if(array_key_exists('query', $_POST)) $query = $_POST['query'];
-
 try {
     $result = mysqli_query(LINK, $query);
     
@@ -24,13 +25,13 @@ try {
         if(array_key_exists('where', $_POST)) {
             $where = $_POST['where'];
         } else {
-            $pk = mysqli_affected_rows(LINK);
+            $pk = mysqli_insert_id(LINK);   
             $where = "$primary_key = $pk";
         }
 
         $result = mysqli_query(LINK, "SELECT * FROM $table_name WHERE $where");
     }
-    
+    print_r($_POST);
     $result = $result->fetch_all(MYSQLI_ASSOC);
     print_r(json_encode($result));
 

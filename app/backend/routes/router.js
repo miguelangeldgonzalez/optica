@@ -51,6 +51,8 @@ export class Router {
     }
 
     async execRoute(route, request, first = true) {
+        if(first) request.fullRoute = route;
+
         this.request = request;
         await this.#execMiddlewares();
         const splitedRoute = first ? route.split("/") : route;
@@ -65,11 +67,15 @@ export class Router {
                 const nextRouter = this.routes.filter(route => {
                     if(route.route == splitedRoute[0]) return route;
                 });
-
-                return await nextRouter[0].execRoute(splitedRoute, this.request, false);
+                
+                if(nextRouter[0] instanceof Router) {
+                    return await nextRouter[0].execRoute(splitedRoute, this.request, false);
+                } else {
+                    return new ErrorRouter(404, `No se encontro la ruta ${this.request.fullRoute}`);
+                }
             }
         } else {
-            return new ErrorRouter(404, `No se encontro la ruta ${route}`);
+            return new ErrorRouter(404, `No se encontro la ruta ${this.request.fullRoute}`);
         }
     }
 

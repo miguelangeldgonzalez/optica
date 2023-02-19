@@ -8,11 +8,6 @@ export default class Registro extends Init {
     }
 
     events() {
-        const data = new FormData();
-        data.append("name", "Miguel");
-        router.execRoute('api/users/create', data).then(response => {
-            console.log(response)
-        })
 
         const $btnSignIn= document.querySelector('.sign-in-btn'),
               $btnSignUp = document.querySelector('.sign-up-btn'),  
@@ -56,6 +51,17 @@ export default class Registro extends Init {
             }else{
                 parrafo.innerHTML = "Enviado"
             }
+
+            router.execRoute('api/users/create', {element: '#form'}).then(user => {
+                router.execRoute('api/auth/startSessionWithId', {
+                    body: {
+                        id: parseInt(user[0].usuario_id)
+                    }
+                }).then(response => {
+                    console.log(response);
+                })
+            })
+
         })
     }
 }
