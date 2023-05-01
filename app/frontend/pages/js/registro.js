@@ -1,69 +1,133 @@
 import Init from "./init.js";
 
-import router from "../../../backend/routes/index.js";
+import UserController from "../../../backend/controllers/user.controller.js";
 
 export default class Registro extends Init {
+    singUpActive = true;
+
     constructor () {
         super();
     }
 
-    events() {
+    async login() {
+        document.querySelector("#login_form").addEventListener('submit', async e => {
+            e.preventDefault();
+            
+            const data = FormData.extractFromElement('#login_form');
+            const session = await UserController.startSession(data);
 
-        const $btnSignIn= document.querySelector('.sign-in-btn'),
-              $btnSignUp = document.querySelector('.sign-up-btn'),  
-              $signUp = document.querySelector('.sign-up'),
-              $signIn  = document.querySelector('.sign-in');
-        
-        document.addEventListener('click', e => {
-            if (e.target === $btnSignIn || e.target === $btnSignUp) {
-                $signIn.classList.toggle('active');
-                $signUp.classList.toggle('active')
+            if(session) {
+                window.location = '/panel_principal';
+            } else {
+                alert('Usuario o contraseña no valido');
             }
-        });
-
-        const nombre = document.getElementById("name")
-        const email = document.getElementById("email")
-        const pass = document.getElementById("password")
-        const form = document.getElementById("form")
-        const parrafo = document.getElementById("warnings")
-
-        form.addEventListener("submit", e=>{
-            e.preventDefault()
-            let warnings = ""
-            let entrar = false
-            let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/
-            parrafo.innerHTML = ""
-            if(nombre.value.length <6){
-                warnings += `El nombre no es valido <br>`
-                entrar = true
-            }
-            if(!regexEmail.test(email.value)){
-                warnings += `El email no es valido <br>`
-                entrar = true
-            }
-            if(pass.value.length < 8){
-                warnings += `La contraseña no es valida <br>`
-                entrar = true
-            }
-
-            if(entrar){
-                parrafo.innerHTML = warnings
-            }else{
-                parrafo.innerHTML = "Enviado"
-            }
-
-            router.execRoute('api/users/create', {element: '#form'}).then(user => {
-                router.execRoute('api/auth/startSessionWithId', {
-                    body: {
-                        id: parseInt(user[0].usuario_id)
-                    }
-                }).then(response => {
-                    console.log(response);
-                })
-            })
-
         })
     }
+
+    async singUp() {
+        this.registerForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            let error = false;
+            document.querySelectorAll('.label_error').forEach(label => {
+                if(!label.classList.contains('invisible')) label.classList.add('invisible');
+            })
+
+            document.querySelectorAll('#label_error_email > *').forEach(span => {
+                if(!span.classList.contains('display_none')) span.classList.add('display_none');
+            })
+
+            const result = await UserController.createAndStartUser(FormData.extractFromElement('#singup_form'))
+
+            if(typeof result.error == 'string') {
+                error = true;
+                if(result.error.includes('Duplicate entry')) {
+                    if(result.error.includes("for key 'correo'")) {
+                        document.querySelector('#label_error_email').classList.remove('invisible');
+                        document.querySelector('#label_error_email #duplicate').classList.remove('display_none');
+                    }
+                    if(result.error.includes("for key 'nombre_usuario'")) document.querySelector('#label_error_username').classList.remove('invisible');
+                }
+            }
+
+            if (result.validationError) {
+                error = true;
+                if(result.validationError.password) {
+                    this.labelErrorPassword.classList.remove('invisible');
+
+                    if (result.validationError.password.lengthMin) {
+                        document.querySelector('#minLength').classList.remove('check');
+                    } else {
+                        document.querySelector('#minLength').classList.add('check');
+                    }
+
+                    if (result.validationError.password.alphanumeric) {
+                        document.querySelector('#alphanumeric').classList.remove('check');
+                    } else {
+                        document.querySelector('#alphanumeric').classList.add('check');
+                    }
+
+                }
+
+                if (result.validationError.correo) {
+                    document.querySelector('#label_error_email').classList.remove('invisible');
+                    document.querySelector('#label_error_email #wrong').classList.remove('display_none');
+                }
+            }
+
+            if(!error) window.location = '/panel_principal';
+        })
+    }
+
+    async loginOrSingUp() {
+        const eventFunction = e => {
+            if (this.singUpActive) {
+                this.registerButton.classList.add('display_none')
+                this.loginButton.classList.remove('display_none')
+
+                this.loginForm.style.transform = 'translateY(250%)';
+                this.loginForm.style.transition = '.75s';
+                setTimeout(() => {
+                    this.registerForm.style.transform = 'translateY(0)';
+                    this.registerForm.style.transition = '.75s';
+                    
+                }, 400)
+            } else {
+                this.registerButton.classList.remove('display_none')
+                this.loginButton.classList.add('display_none')
+
+                this.registerForm.style.transform = 'translateY(250%)';
+                this.registerForm.style.transition = '.75s';
+                setTimeout(() => {
+                    this.loginForm.style.transform = 'translateY(130%)';
+                    this.loginForm.style.transition = '.75s';
+                    
+                }, 400)
+            }
+            this.singUpActive = !this.singUpActive;
+        }
+
+        this.loginButton.addEventListener('click', e => eventFunction(e));
+        this.registerButton.addEventListener('click', e => eventFunction(e));
+    }
+
+    load() {
+        this.loginButton = document.querySelector('#login_button');
+        this.loginForm = document.querySelector('.form_login__container');
+        this.loginFormButton = document.querySelector('#login_form_button');
+
+        this.registerButton = document.querySelector('#register_button');
+        this.registerForm = document.querySelector('.form_singup__container');
+        this.registerFormButton = document.querySelector('#register_form_button');
+
+        this.labelErrorUsername = document.querySelector('#label_error_username');
+        this.labelErrorPassword = document.querySelector('#label_error_password');
+
+        this.loginOrSingUp();
+        this.singUp();
+        this.login();
+    }
+
+
 }
 
 

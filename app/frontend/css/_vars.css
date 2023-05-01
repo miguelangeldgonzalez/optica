@@ -1,18 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 :root {
-    --black-bg: #232323;
-    --black-bg-box: #1d1d1d;
+    --white-text: #FFF;
+    --yellow: #F9E24A;
+    --yellow-border: #B8961F;
+    --black: #000;
+    --purple: #70028B;
+    --border-table: 3px;
+}
 
-    --input-normal: #13719c;
-    --input-selected: #00adff;
-
-    --warning: #fd8e32;
-
-    --danger: #fc2222;
-    --danger-selected: #ad4444;
+@font-face {
+    font-family: 'Baloo';
+    src: url('./../assets/fonts/BalooBhaijaan2-Regular.ttf');
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'Baloo';
+    src: url('./../assets/fonts/BalooBhaijaan2-Bold.ttf');
+    font-weight: bold;
 }
 
 html {
-    background-color: var(--black-bg);
     font-size: 16px;
 }
 
@@ -21,59 +38,48 @@ a {
     color: white;
 }
 
+h2 {
+    font-size: 2rem;
+}
+
+html, body, input, p, h2, h3 {
+    font-family: 'Baloo';
+}
+
 input {
     font-size: 1rem;
 }
 
-html, body, input, p {
-    font-family: 'Roboto';
+input[type=button], input[type=submit] {
+    cursor: pointer;
 }
 
 main {
     width: 100%;
 }
 
-/* --------------------- Estilos para botones */
-.input-form {
-    background-color: var(--black-bg-box);
-    color: white;
-    border-color: var(--input-normal);
-    transition: .2s;
-    border-style: solid;
-    padding: 10px;
-    border-radius: 5px
-}
-.input-form:focus-visible {
-    outline: none;
-    border-color: var(--input-selected);
+@keyframes invisible {
+    100% {
+        visibility: hidden
+    }
 }
 
-input.warning, input.danger:hover {
-    border-color: var(--warning);
-}
-input.warning:focus-visible {
-    border-color: var(--warning-selected);
+.invisible {
+    visibility: hidden
 }
 
-input.danger, input.danger:hover {
-    border-color: var(--danger)
-}
-input.danger:focus-visible {
-    border-color: var(--danger-selected)
+.fail {
+   color: #ff3f3f
 }
 
-/* Botones */
-
-.btn-primary {
-    font-size: 1rem;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: var(--input-normal);
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: .5s
+.display_none {
+    display: none!important;
 }
-.btn-primary:hover{
-    background-color: var(--input-selected);
+
+.check {
+    color: #68e368
+}
+
+.label_error {
+    transition: .3s;
 }

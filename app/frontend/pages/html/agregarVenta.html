@@ -1,0 +1,82 @@
+<main>
+    <div class="forms__container">
+
+        <div class="slider">
+            <!-- Primer Paso -->
+            <div class="form_step">
+                <h2>Ingresa la información del cliente</h2>
+    
+                <form id="first_step">
+                    <div class="form_group">
+                        <label>Numero de Cedula</label>
+                        <input type="text" class="information_button only_numbers" name="cedula" required>
+                    </div>
+    
+                    <div class="form_group">
+                        <label>Nombre</label>
+                        <input type="text" class="information_button only_letters" name="nombre" required>
+                    </div>
+    
+                    <div class="form_group">
+                        <label>Numero de Telefono</label>
+                        <input type="number" class="information_button only_numbers" name="telefono" required>
+                    </div>
+    
+                    <div class="form_group">
+                        <input type="submit" value="Siguiente" class="next action_button">
+                    </div>
+                </form>
+            </div>
+    
+            <!-- Segundo Paso -->
+            <div class="form_step">
+                <h2>Ingresa la Compra del Cliente</h2>
+    
+                <form id="second_step">
+                    <table id="products_table">
+                        <tr id="products_total">
+                            <th>Total</th>
+                            <th>$ <span id="total_value">0</span></th>
+                        </tr>
+                    </table>
+    
+                    <div class="products_button__container">
+                    </div>
+                    
+                    <div class="products_button__container">
+                        <input type="button" value="Anterior" class="previous action_button">
+                        <input type="submit" value="Siguiente" class="next action_button">
+                    </div>
+                </form>
+            </div>
+    
+            <!-- Tercer Paso -->
+            <div class="form_step">
+                <h2>Ingresa Información de la Formula</h2>
+
+                <label>
+                    <input type="checkbox">
+                    ¿La formula es para <b><span id="client_name"></span></b>?
+                </label>
+
+                <form id="third_step">
+                    <div class="buttons">
+                        <p>Si hace falta otra persona y otra formula presione el boton de abajo</p>
+                        <input type="button" value="+ Añadir Formula" id="add_formula" class="action_button">
+                        <div class="products_button__container">
+                            <input type="button" value="Anterior" class="previous action_button">
+                            <input type="submit" value="Siguiente" id="test" class="next action_button">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Cuarto Paso -->
+            <div class="form_step">
+                <form id="fourth_step">
+
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

@@ -4,27 +4,31 @@ class User extends Model {
     constructor() {
         const columns = [
             {
-                name: 'username',
-                type: 'VARCHAR'
+                name: 'nombres',
+                type: 'string'
+            },
+            {
+                name: 'rol',
+                type: 'string'
             },
             {
                 name: 'password',
-                type: 'VARCHAR'
+                type: 'string'
             },
             {
-                name: 'role',
-                type: 'VARCHAR'
+                name: 'nombre_usuario',
+                type: 'string'
             },
             {
-                name: 'name',
-                type: 'VARCHAR'
+                name: 'correo',
+                type: 'string'
             },
             {
-                name: 'last_name',
-                type: 'VARCHAR',
+                name: 'rol',
+                type: 'string'
             }
         ];
-       super('users', columns);
+       super('usuarios', columns);
     }
 }
 

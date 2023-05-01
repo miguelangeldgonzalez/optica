@@ -5,13 +5,16 @@ export function formTransformObject(req) {
     } 
 }
 
-export function formTransformElement(req) {
-    if (req.element) try {
+/**
+ * 
+ * @param element Identificador HTML, por ejemplo, "#form"
+ * @returns Object
+ */
+
+export function formTransformElement(element) {
+    try {
         return {
-            body: {
-                ...FormData.extractFromElement(req.element),
-            },
-            editRequest: true
+            ...FormData.extractFromElement(element),
         }
     } catch(e) {
         throw new Error(`No se pudo obtener el FormData del elemento ${req.element}`);

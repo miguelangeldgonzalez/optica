@@ -3,10 +3,9 @@
 $password = '';
 $username = 'root';
 $host = 'localhost';
-$dbname = 'project';
+$dbname = 'proyecto';
 
-
-define('LINK', new mysqli($host, $username, $password, $dbname));
+$LINK = new mysqli($host, $username, $password, $dbname);
 
 
 

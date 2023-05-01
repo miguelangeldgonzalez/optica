@@ -1,85 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
+<main>
+    <section class="button_logo__section">
+        <img src="./app/frontend/assets/logo_optiluz.png" id="button_logo__logo">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <title>login y registro</title>
-</head>
-
-<body>
-
-
-    <div class="container-form sign-up">
-        <div class="bienvenido-de-nuevo">
-            <div class="message">
-                <h2>Bienvenido a optiluz</h2>
-                <p>Si ya tienes una cuenta, por favor haz click aqui</p>
-                <button class="sign-up-btn">Iniciar Sesion</button>
-            </div>
+        <div class="button_logo__information" id="register_button">
+            <h3>Si aún NO tienes una cuenta Registrate aquí</h3>
+            <input type="button" id="button_logo__button" class="form_input" value="Registrase">
         </div>
-        <form class="formulario"  action="" method="POST" id="form" >
-            <h2 class="registro">Crear una cuenta</h2>
-            <div class="iconos">
-                <div class="border-icon">
-                    <i class='bx bxl-instagram'></i>
-                </div>
-                <div class="border-icon">
-                    <i class='bx bxl-linkedin' ></i>
-                </div>
-                <div class="border-icon">
-                    <i class='bx bxl-facebook-circle' ></i>
-                </div>
-            </div> 
-            <p class="cuenta-free">Crear una cuenta</p>
-            <input type="text" name="nombres" id="name" placeholder="Nombre">
-            <input type="text" name="nombre_usuario" id="email" placeholder="Nombre de Usuario">
-            <input type="password" name="password" id="password" placeholder="Contraseña">
-            <input type="submit"  value="Registrarse">
-            <p class="warnings" id="warnings"></p>
-        </form>
-    </div>
 
-
-    <div class="container-form sign-in">
-        <form class="formulario"  >
-            <h2 class="registro">Iniciar Sesion</h2>
-            <div class="iconos">
-                <div class="border-icon">
-                    <i class='bx bxl-instagram'></i>
-                </div>
-                <div class="border-icon">
-                    <i class='bx bxl-linkedin' ></i>
-                </div>
-                <div class="border-icon">
-                    <i class='bx bxl-facebook-circle' ></i>
-                </div>
-            </div>
-            <p class="cuenta-free">¿Aun no tienes una cuenta?</p>
-            <input type="email"  placeholder="Email">
-            <input type="password"  placeholder="Contraseña">
-            <input type="button" value="Iniciar Sesion">
-        </form>
-
-
-        <div class="bienvenido-de-nuevo">
-            <div class="message">
-                <h2>Bienvenido de nuevo</h2>
-                <p>Si aun no tienes una cuenta por favor registrese aqui</p>
-                <button class="sign-in-btn">Registrarse</button>
-            </div>
+        <div class="button_logo__information display_none" id="login_button">
+            <h3>Si YA tienes una cuenta Inicia Sesión aquí</h3>
+            <input type="button" id="button_logo__button" class="form_input" value="Iniciar Sesión">
         </div>
-    </div>
+    </section>
+
+    <section class="form__section">
+        <div class="form__container">
+
+            <div class="form_login__container">
+                <h2>Inicia Sesión</h2>
+                <form id="login_form">
+                    <label>Nombre de Usuario o correo</label>
+                    <input type="text" name='nombre_usuario' class="form_input">
     
-    <script src="script.js"></script>
-    <script src="script2.js" ></script>
+                    <label>Contraseña</label>
+                    <input type="password" name="password" class="form_input">
+    
+                    <input type="submit" class="form_input" value='Iniciar Sesion' id="login_form_button">
+                </form>
+            </div>
+    
+            <div class="form_singup__container">
+                <h2>Registrarse</h2>
+                <form  id="singup_form">
+                    
+                    <label>Nombre Completo</label>
+                    <input type="text" name='nombres' class="form_input" onkeydown="return /([a-zA-Z ])/i.test(event.key)" required>
+                    
+                    <div class="input_container">
+                        <label>Nombre de Usuario</label>
+                        <input type="text" name='nombre_usuario' class="form_input" max="10" required>
+                        <label class="label_error invisible" id="label_error_username">Ya hay un usuario registrado con este nombre de usuario</label>
+                    </div>
 
-</body>
+                    <div class="input_container">
+                        <label>Correo</label>
+                        <input type="text" name='correo' class="form_input" required>
+                        <label class="label_error invisible" id="label_error_email">
+                            <span class="display_none" id="duplicate">Ya hay un usuario registrado con este correo</span>
+                            <span class="display_none" id="wrong">Este correo no es valido</span>
+                        </label>
+                    </div>
 
-</html>
+                    <div class="input_container">
+                        <label>Contraseña</label>
+                        <input type="password" name="password" class="form_input" required>
+                        <label  class="label_error invisible" id="label_error_password">
+                            <span class="check fail" id="minLength">La contraseña debe contener al menos 10 caracteres</span> <br>
+                            <span class="check fail" id="alphanumeric">La contraseña debe contener al menos un número o una letra</span>
+                        </label>
+                    </div>
+    
+                    <input type="submit" class="form_input" value='Registrarse' id="register_form_button">
+                </form>
+            </div>
+            
+            <hr>
+        </div>
+    </section>
+</main>

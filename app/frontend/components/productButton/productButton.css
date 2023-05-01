@@ -1,0 +1,7 @@
+.product_button {
+    padding: 5px 15px;
+    background: rgba(184, 150, 31, 0.5);
+    border: 2px solid #BF9A14;
+    border-radius: 30px;
+    cursor: pointer;
+}

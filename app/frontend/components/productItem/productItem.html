@@ -1,0 +1,58 @@
+<tr class="item common">
+    <td>
+        <span id="product_name"></span>
+        <input type="number" style="display:none" name="producto_id">
+    </td>
+    <td>
+        <input type="number" name="precio" class="only_decimal_and_positive_numbers" maxlength="5" required>
+        <span>$</span>
+
+    </td>
+    <td>
+        <input type="button" value="x" id="delete">
+    </td>
+</tr>
+
+<tr class="item glasses title">
+    <td>
+        <span>Lentes</span>
+    </td>
+    <td></td>
+    <td>
+        <input type="button" value="x" id="delete">
+    </td>
+</tr>
+
+<tr class="item glasses product">
+    <td>
+        <span id="product_name">Cristales</span>
+    </td>
+    <td>
+        <input type="number" name="precio" producto_id="1" class="only_decimal_and_positive_numbers" necesita_formula="true" nombre="Cristales" required>
+        <span>$</span>
+    </td>
+    <td></td>
+</tr>
+<tr class="item glasses product">
+    <td>
+        <span id="product_name">Montura</span>
+    </td>
+    <td>
+        <input type="number" name="precio" producto_id="2" class="only_decimal_and_positive_numbers" nombre="Montura" required>
+        <span>$</span>
+    </td>
+    <td></td>
+</tr>
+<tr class="item glasses product">
+    <td>
+        <span id="product_name">Consulta</span>
+    </td>
+    <td>
+        <input type="number" name="precio" producto_id="3" class="only_decimal_and_positive_numbers" necesita_formula="true" nombre="Consulta" required>
+        <span>$</span>
+    </td>
+
+    <td>
+        <input type="button" value="x" id="delete" producto_id="3">
+    </td>
+</tr>

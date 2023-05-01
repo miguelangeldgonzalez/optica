@@ -1,0 +1,64 @@
+<div class="form_formula__container">
+    <input type="button" class="delete_form_formula display_none" value="x">
+    <div class="form_group">
+        <label>Numero de cedula</label>
+        <input type="text" name="cedula" class="information_button client_data only_numbers" required>
+    </div>
+    
+    <div class="form_group">
+        <label>Nombres</label>
+        <input type="text" name="nombre" class="information_button client_data only_letters" required>
+    </div>
+    
+    <div class="form_group">
+        <label>Fecha de Nacimiento</label>
+        <input type="date" name="fecha_nacimiento" class="information_button client_data only_letters" required>
+    
+        <label>Sexo</label>
+        <select class="client_data information_button" name="sexo" required>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+        </select>
+    </div>
+
+    <table class="formula_data">
+        <tr>
+            <th>Ojo</th>
+
+            <th>Esfericos</th>
+            <th>Cilindros</th>
+            <th>Eje</th>
+            <th>Adicion</th>
+        </tr>
+
+        <tr>
+            <th>Ojo Derecho</th>
+            <td><input type="number" name="esferico_ojo_derecho" required></td>
+            <td><input type="number" name="cilindro_ojo_derecho" required></td>
+            <td><input type="number" name="eje_ojo_derecho" required></td>
+            <td><input type="number" name="adicion_ojo_derecho" required></td>
+        </tr>
+
+        <tr>
+            <th>Ojo Izquierdo</th>
+            <td><input type="number" name="esferico_ojo_izquierdo" required></td>
+            <td><input type="number" name="cilindro_ojo_izquierdo" required></td>
+            <td><input type="number" name="eje_ojo_izquierdo" required></td>
+            <td><input type="number" name="adicion_ojo_izquierdo" required></td>
+        </tr>
+
+        <tr>
+            <th colspan="3">Distancia Pupilar</th>
+            <td colspan="2"><input type="number" name="distancia_pupilar" required></td>
+        </tr>
+
+        <tr>
+            <th colspan="3">¿Es Progresivo?</th>
+            <td colspan="2"><input type="checkbox" name="es_progresivo"></td>
+        </tr>
+    </table>
+
+    <div class="available_items">
+        <p>¿A que productos se aplica esta formula?</p>
+    </div>
+</div>

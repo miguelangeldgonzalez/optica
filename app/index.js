@@ -1,13 +1,25 @@
 import { Render } from "./render.js";
 
-import Login from "./frontend/pages/js/login.js";
 import NotFound from "./frontend/pages/js/notFound.js";
 import Registro from "./frontend/pages/js/registro.js";
+import AgregarVenta from "./frontend/pages/js/agregarVenta.js";
+import PanelPrincipal from "./frontend/pages/js/panelPrincipal.js";
+import LoadModels from "./backend/models/index.js";
+
+LoadModels();
 
 const pages = [
     {
         route: '/',
         module: new Registro()
+    },
+    {
+        route: '/panel_principal',
+        module: new PanelPrincipal()
+    },
+    {
+        route: '/agregar_venta',
+        module: new AgregarVenta()
     },
     {
         route: '/404',
@@ -36,5 +48,8 @@ FormData.extractFromObject = data => {
 
     return object;
 }
+
+Object.isEmpty = o => JSON.stringify(o) == '{}' ? true : false;
+
 
 window.addEventListener('load', () => Render.loadPage(pages));

@@ -17,6 +17,7 @@ export class RenderError {
 
 export class Render {
     static async renderContent(pageModule) {
+        if(pageModule.beforeLoad) await pageModule.beforeLoad();
         const link = document.createElement("link");
     
         link.setAttribute("rel", "stylesheet");
@@ -26,7 +27,7 @@ export class Render {
         
         document.querySelector("body").innerHTML = await pageModule.getContent();
         
-        if(pageModule.events) pageModule.events();
+        if(pageModule.load) await pageModule.load();
     }
 
     static loadPage(pages) {
