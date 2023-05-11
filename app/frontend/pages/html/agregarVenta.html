@@ -14,7 +14,7 @@
     
                     <div class="form_group">
                         <label>Nombre</label>
-                        <input type="text" class="information_button only_letters" name="nombre" required>
+                        <input type="text" class="information_button only_letters" name="nombres" required>
                     </div>
     
                     <div class="form_group">
@@ -73,9 +73,59 @@
 
             <!-- Cuarto Paso -->
             <div class="form_step">
-                <form id="fourth_step">
+                <h2>Ingresar Pago</h2>
 
+                <form id="fourth_step">
+                    <div class="form_group">
+                        <label>Cantidad</label>
+                        <input type="number" class="information_button only_numbers" name="cantidad" required>
+                    </div>
+
+                    <div class="form_group">
+                        <label>Metodo de Pago</label>
+                        <select class="information_button" name="metodo_pago">
+                            <option value="Pago Movil">Pago Movil</option>
+                            <option value="Punto de Venta">Punto de Venta</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="form_group">
+                        <label>Referencia</label>
+                        <input type="number" class="information_button only_numbers" name="referencia">
+                    </div>
+
+                    <div class="products_button__container">
+                        <input type="button" value="Anterior" class="previous action_button">
+                        <input type="submit" value="Siguiente" class="next action_button">
+                    </div>
                 </form>
+            </div>
+
+            <!-- Quinto Paso -->
+            <div class="form_step">
+                <h2>Corroborar Información de la Compra</h2>
+
+                <div id="client_formula_data">
+                    <h3>Información de la(s) Formula(s) y Cliente(s)</h3>
+                </div>
+
+                <div>
+                    <h3>Información de los productos</h3>
+
+                    <table id="products_data__table">
+
+                    </table>
+                </div>
+
+                <label>
+                    <b>Total <span id="show_total"></span>$</b>
+                </label>
+
+                <div class="products_button__container">
+                    <input type="button" value="Anterior" class="previous action_button">
+                    <input type="button" value="Finalizar" id="end" class="action_button">
+                </div>
             </div>
         </div>
     </div>

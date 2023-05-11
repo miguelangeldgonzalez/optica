@@ -57,14 +57,28 @@ export default class Model {
             data.table_name = this.tableName;
             data.primary_key = this.primaryKey.name;
         }
-
+        
+        console.log(query);
         return await fetch('./app/backend/db/php/exec.php', {
             method: 'POST',
             body: JSON.stringify(data)
         }).then(data => data.json());
     }
 
+    /**
+     * Limpia el objeto para quitar todas las propiedades que no tengan el nombre de una columna
+     * @param data 
+     */
+    #onlyValidColumns(data) {
+        for (const c in data) {
+            if(!this.columns.some(column => column.name === c)) delete data[c];
+        }
+
+        return data;
+    }
+
     create (data) {
+        data = this.#onlyValidColumns(data);
         if(!data) throw new Error("Fallo al crear en el modelo"); 
 
         let columns = '(';

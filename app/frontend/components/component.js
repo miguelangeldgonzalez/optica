@@ -43,4 +43,8 @@ export default class Component extends DOMLoader {
 
         return this;
     }
+
+    afterLoad() {
+        console.warn("Metodo after load llamado vacio para el componente", this)
+    }
 }

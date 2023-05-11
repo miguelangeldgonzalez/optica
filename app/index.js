@@ -1,12 +1,19 @@
 import { Render } from "./render.js";
 
+import Model from "./backend/db/Model.js";
+import Init from "./frontend/pages/js/init.js";
+import Component from "./frontend/components/component.js";
+
+globalThis.env = 'DEV';
+globalThis.Init = Init;
+globalThis.Model = Model;
+globalThis.Component = Component;
+
+import LoadModels from "./backend/models/index.js";
 import NotFound from "./frontend/pages/js/notFound.js";
 import Registro from "./frontend/pages/js/registro.js";
 import AgregarVenta from "./frontend/pages/js/agregarVenta.js";
 import PanelPrincipal from "./frontend/pages/js/panelPrincipal.js";
-import LoadModels from "./backend/models/index.js";
-
-LoadModels();
 
 const pages = [
     {
@@ -52,4 +59,7 @@ FormData.extractFromObject = data => {
 Object.isEmpty = o => JSON.stringify(o) == '{}' ? true : false;
 
 
-window.addEventListener('load', () => Render.loadPage(pages));
+window.addEventListener('load', async () => {
+    await LoadModels();
+    Render.loadPage(pages)}
+);

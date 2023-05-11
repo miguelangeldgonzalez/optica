@@ -1,35 +1,3 @@
-table {
-    border-collapse: collapse;
-    border-radius: 25px;
-    box-shadow: inset 0 0 0 var(--border-table) var(--yellow-border);
-}
-  
-tr td, tr th, tr {
-    border: var(--border-table) solid var(--yellow-border);
-    outline: none;
-}
-  
-/* este código es específico para este ejemplo,
-si quieres hacerlo más genérico deberías añadir más 
-casos añadiendo thead, tbody, etc. */
-tr:first-child th:first-child,
-tr:first-child th:last-child,
-tr:last-child td:first-child,
-tr:last-child th:first-child,
-tr:last-child td:last-child {
-    border-top: var(--border-table) solid transparent;
-    border-left: var(--border-table) solid transparent;
-}
-  
-tr:last-child td:last-child,
-tr:first-child th:last-child {
-    border-right: var(--border-table) solid transparent;
-}
-  
-tr:last-child td, tr:last-child th {
-    border-bottom: var(--border-table) solid transparent;
-}
-
 .formula_data {
     width: 80%;
     margin: 0 auto;

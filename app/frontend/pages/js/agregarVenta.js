@@ -1,10 +1,14 @@
 import Init from "./init.js";
 import Header from "../../components/header/header.js";
 
+import VentasController from "../../../backend/controllers/ventas.controller.js";
+
 // Controllers
 import FormFormula from "../../components/formFormula/formFormula.js";
 import ProductButton from "../../components/productButton/productButton.js";
 import UserController from "../../../backend/controllers/user.controller.js";
+import ShowClientData from "../../components/showClientData/showClientData.js";
+import ProductItemSale from "../../components/productItemSale/productItemSale.js";
 import ProductController from "../../../backend/controllers/product.controller.js";
 
 export default class AgregarVenta extends Init {
@@ -91,7 +95,6 @@ export default class AgregarVenta extends Init {
         document.querySelector('#total_value').innerText = this.total;
     }
 
-
     async loadHeader() {
         this.user = await UserController.recoverSession();
         if (Array.isArray(this.user)) window.location = '/';
@@ -154,7 +157,15 @@ export default class AgregarVenta extends Init {
             if (checked.filter(c => c).length != this.availablesLength) return alert('Debe indicar a que formula pertenece cada producto');
             if (this.formFormula.filter(f => f.hasOneChecked()).length != this.formFormula.length) return alert('Todas las formulas deben contener al menos un producto');
 
-            await this.loadFourthStep();
+            this.nextAction();
+        })
+
+        document.querySelector('#fourth_step').addEventListener('submit', e => {
+            e.preventDefault();
+
+            this.paymentData = FormData.extractFromElement('#fourth_step');
+            this.loadFifthStep();
+            this.nextAction();
         })
     }
 
@@ -174,15 +185,18 @@ export default class AgregarVenta extends Init {
             if (e.target.checked)  {
                 component.chageClientData(this.clientData);
             } else {
-                component.chageClientData({nombre: '', cedula: ''});
+                component.chageClientData({nombres: '', cedula: ''});
             }
         })
     }
 
-    async loadFourthStep() {
+    async loadFifthStep() {
         let clientes = []
         if (this.clientUsed) {
+            const telefono = this.clientData.telefono;
             this.clientData = this.formFormula[0].getData();
+            this.clientData.telefono = telefono;
+
             if (this.formFormula.length > 1) {
                 for (let index = 1; index < this.formFormula.length; index++) {
                     const f = this.formFormula[index];
@@ -195,33 +209,58 @@ export default class AgregarVenta extends Init {
                 clientes.push(f.getData());
             }
         }
-        
-        let productos = [];
-        if(!Object.isEmpty(this.commonItem)) {
+
+        const clientData = await new ShowClientData(this.clientData).loadComponent();
+        const clientFormulaContainer = document.querySelector('#client_formula_data');
+        clientFormulaContainer.append(clientData.component.shadowRoot);
+
+        if (Array.isArray(clientes)) {
+            for (let index = 0; index < clientes.length; index++) {
+                const element = clientes[index];
+                const cliente = await new ShowClientData(element).loadComponent();
+
+                clientFormulaContainer.append(cliente.component.shadowRoot);
+            }
+        }
+
+        const productData = document.querySelector('#products_data__table');
+
+        if (!Object.isEmpty(this.commonItem)) {
             for (const i in this.commonItem) {
-                productos.push(this.commonItem[i])
+                const item = await new ProductItemSale({type: 'common', ...this.commonItem[i]}).loadComponent();
+                productData.append(item.component.shadowRoot);
+            } 
+        }
+
+        if (!Object.isEmpty(this.glassesItem)) {
+            for (const i in this.glassesItem) {
+                const item = await new ProductItemSale({type: 'glasses', ...this.glassesItem[i]}).loadComponent();
+                productData.append(item.component.shadowRoot);
             }
         }
 
-        let lentes = [];
-        if(!Object.isEmpty(this.glassesItem)) {
-            for (const g in this.glassesItem) {
-                let parte_lentes = [];
-                for(const i in this.glassesItem[g]) {
-                    parte_lentes.push(this.glassesItem[g][i]);
-                }
+        document.querySelector('#show_total').innerText = this.total;
 
-                lentes.push(parte_lentes);
+        document.querySelector('#end').addEventListener('click', async e => {
+            const result = await VentasController.create({
+                clientes,
+                data_cliente: this.clientData,
+                commonItem: this.commonItem,
+                glassesItem: this.glassesItem,
+                payment: this.paymentData
+            })
+            
+            if (result) {
+                alert("Se ha introducido la compra correctamente");
+                window.location = '/panel_principal';
+            } else {
+                alert("Algo ha salido mal, recargue e intentelo de nuevo");
             }
-    
-        }
-
-
-        console.log({lentes, clientes, cliente_pagador: this.clientData});
+        })
     }
 
     async loadThirdStep() {
-        document.querySelector('#client_name').innerText = this.clientData?.nombre;
+        document.querySelector('#client_name').innerText = this.clientData?.nombres;
         const firstFormFormula = await new FormFormula(this, this.formFormulaId, true).loadComponent();
 
         this.loadCheckbox(firstFormFormula);
@@ -268,8 +307,9 @@ export default class AgregarVenta extends Init {
         for (const i in this.commonProductsWithFormula) {
             availables[id] = {
                 description: this.commonProductsWithFormula[i].nombre + ' - ' + this.commonProductsWithFormula[i].precio + '$',
-                id,
-                type: 'common'
+                commonId: i,
+                type: 'common',
+                id
             }
             id++
         }
@@ -279,8 +319,10 @@ export default class AgregarVenta extends Init {
                 if (this.glassesItem[g][i].necesita_formula) {
                     availables[id] = {
                         description: `Lentes - ${this.glassesItem[g][i].nombre} - ${this.glassesItem[g][i].precio} $`,
-                        id,
-                        type: 'glasses'
+                        glassesId: g,
+                        itemId: i,
+                        type: 'glasses',
+                        id
                     }
                     id++;
                 }

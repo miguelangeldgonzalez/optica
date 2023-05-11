@@ -2,16 +2,15 @@ import { loadRestrictions } from "./restrictions.js";
 
 export default class DOMLoader {
     constructor() {
-        switch (this.__proto__.__proto__?.constructor?.name) {
-            
-            case 'Init':
+        switch (true) {
+            case this instanceof Init:
                 this.temporalLoad = this.load;
                 this.load = () => {
                     loadRestrictions();
                     return this.temporalLoad();
                 }
                 break;
-            case 'Component':
+            case this instanceof Component:
                 if (this.afterLoad) {
                     this.temporalLoad = this.afterLoad;
                     this.afterLoad = () => {

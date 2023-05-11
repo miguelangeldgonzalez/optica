@@ -46,11 +46,14 @@ export default class FormFormula extends Component {
     
     getData() {
         const clientData = {};
+
         document.querySelectorAll(`div[form_id='${this.id}'] .client_data`).forEach(i => {
             clientData[i.getAttribute('name')] = i.value;
         })
 
-        clientData.formula = {};
+        clientData.formula = {
+            usedIn: []
+        };
         document.querySelectorAll(`div[form_id='${this.id}'] .formula_data input`).forEach(i => {
             let value;
 
@@ -66,6 +69,23 @@ export default class FormFormula extends Component {
             }
 
             clientData.formula[i.getAttribute('name')] = value;
+        })
+
+        document.querySelectorAll(`div[form_id='${this.id}'] input[type='checkbox']`).forEach(i => {
+            if (i.checked) {
+                if (i.getAttribute('available_type') === 'common') {
+                    clientData.formula.usedIn.push({
+                        type: 'common',
+                        id: i.getAttribute('common_id')
+                    })
+                } else {
+                    clientData.formula.usedIn.push({
+                        type: 'glasses',
+                        glasses_id: i.getAttribute('glasses_id'),
+                        item_id: i.getAttribute('item_id')
+                    })
+                }
+            } 
         })
 
         

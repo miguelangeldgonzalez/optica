@@ -3,12 +3,12 @@
     margin: 80px auto;
     border: 1px solid red;
     flex-direction: row;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .slider {
     position: relative;
-    width: calc(100% * 4);
+    width: calc(100% * 5);
     display: flex;
     flex-flow: row;
     transition: .5s;
@@ -77,4 +77,80 @@
 #products_table .glasses.title span {
     font-weight: bold;
     color:rgba(0, 0, 0, 0.90);
+}
+
+.show_client_data {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.show_client_data .client_data, #products_data__table {
+    width: 100%;
+}
+.show_client_data input, #products_data__table input {
+    outline: none;
+    border: none;
+    width: 50%;
+    background-color: transparent;
+}
+
+#products_data__table .item > td {
+    text-align: left;
+}
+
+#products_data__table .price_td {
+    text-align: right!important;
+}
+
+#products_data__table .price_td input {
+    width: 10%;
+}
+
+#products_data__table .item.glasses.product #product_name {
+    margin-left: 15px;
+}
+
+#products_data__table .title {
+    font-weight: bold;
+}
+
+.form_step h3 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+/* Logica de las tablas */
+table.formula_data {
+    border-collapse: collapse;
+    border-radius: 25px;
+    box-shadow: inset 0 0 0 var(--border-table) var(--yellow-border);
+}
+  
+.formula_data tr td, .formula_data tr th, .formula_data tr {
+    border: var(--border-table) solid var(--yellow-border);
+    outline: none;
+}
+  
+/* este código es específico para este ejemplo,
+si quieres hacerlo más genérico deberías añadir más 
+casos añadiendo thead, tbody, etc. */
+.formula_data tr:first-child th:first-child,
+.formula_data tr:first-child th:last-child,
+.formula_data tr:last-child td:first-child,
+.formula_data tr:last-child th:first-child,
+.formula_data tr:last-child td:last-child {
+    border-top: var(--border-table) solid transparent;
+    border-left: var(--border-table) solid transparent;
+}
+  
+.formula_data tr:last-child td:last-child,
+.formula_data tr:first-child th:last-child {
+    border-right: var(--border-table) solid transparent;
+}
+  
+.formula_data tr:last-child td, .formula_data tr:last-child th {
+    border-bottom: var(--border-table) solid transparent;
 }

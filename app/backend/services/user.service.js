@@ -30,6 +30,6 @@ export default class UserService {
     
     static searchByEmail(email) {
         const query = `SELECT * FROM usuarios WHERE correo = '${email}'`;
-        return Model.execQuery(query, usersModel)
+        return globalThis.Model.execQuery(query, usersModel)
     }
 }
