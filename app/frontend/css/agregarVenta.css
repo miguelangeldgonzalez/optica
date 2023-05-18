@@ -1,3 +1,4 @@
+
 .forms__container {
     width: 70%;
     margin: 80px auto;
@@ -154,3 +155,5 @@ casos añadiendo thead, tbody, etc. */
 .formula_data tr:last-child td, .formula_data tr:last-child th {
     border-bottom: var(--border-table) solid transparent;
 }
+
+
