@@ -10,36 +10,24 @@ export default class Header extends Component {
     }
 
     async closeSession() {
-        this.DOMComponent.querySelector('#close_session').addEventListener('click', async e => {
+        document.querySelector('#close_session').addEventListener('click', async e => {
             await UserController.closeSession();
             window.location = '/'
         });
     }
 
     async userMenu() {
-        this.DOMComponent.querySelector('#profile_img').addEventListener('click', e => {
-            if (this.menuOpen) {
-                this.DOMComponent.querySelector('.user-menu__container').style.animationName = 'show_menu';
-                
-                setTimeout(() => {
-                    this.DOMComponent.querySelector('.user-menu__container').classList.add('menu_open')
-                    this.DOMComponent.querySelector('.user-menu__container').classList.remove('menu_close')
-                }, 300)
-            } else {
-                this.DOMComponent.querySelector('.user-menu__container').style.animationName = 'hide_menu';
-                setTimeout(() => {
-                    this.DOMComponent.querySelector('.user-menu__container').classList.add('menu_close')
-                    this.DOMComponent.querySelector('.user-menu__container').classList.remove('menu_open')
-                }, 300)
-            }
-
+        const menu = document.querySelector('.user-menu__container');
+        document.querySelector('#profile_img').addEventListener('click', e => {
+            this.menuOpen ? menu.classList.remove('display_none') : menu.classList.add('display_none')
             this.menuOpen = !this.menuOpen;
         })
     }
     
     afterLoad() {
-        if(this.context.user.rol == 'ADMINISTRADOR') this.DOMComponent.querySelector('#user_option').style.display = 'block';
-
+        if(this.context.user.rol !== 'ADMINISTRADOR') document.querySelectorAll('.only_admin').forEach(element => {
+            element.remove();
+        });
 
         this.closeSession()
         this.userMenu()

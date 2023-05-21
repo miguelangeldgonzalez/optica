@@ -2,6 +2,10 @@ import UserService from "../services/user.service.js";
 import { validator, userCreate } from "../middlewares/validation.middleware.js"; 
 
 export default class UserController {
+    static async getAllUsers() {
+        return globalThis.models.usuarios.findAll();
+    }
+    
     static async createAndStartUser(data) {
         const validation = validator(data, userCreate);
         if(validation) return validation;

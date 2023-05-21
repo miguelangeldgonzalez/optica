@@ -13,6 +13,7 @@ import ProductController from "../../../backend/controllers/product.controller.j
 
 export default class AgregarVenta extends Init {
     step = 1;
+    maxStep = 5;
     total = 0;
 
     glassesId = 0;
@@ -100,13 +101,19 @@ export default class AgregarVenta extends Init {
         if (Array.isArray(this.user)) window.location = '/';
 
         const header = await new Header(this).loadComponent();
-        document.querySelector('main').before(header.component);
+        document.querySelector('main').before(header.component.shadowRoot);
         header.afterLoad();
     }
 
     nextAction(steps = 0) {
-        document.querySelector('.slider').style.right = `calc(100% * ${this.step + steps})`;
-        this.step += (steps + 1);
+        // Si la cantidad de pasos que se va a mover no es mayor o igual a la cantidad de pasos disponibles
+        if (!((steps + this.step) >= this.maxStep)) {
+            if(this.step == 2 && this.skipThirdStep) steps = 1;
+            document.querySelector('.slider').style.right = `calc(100% * ${this.step + steps})`;
+            this.step += (steps + 1);
+        }
+
+        this.hiderOrShowBigSteps()
     }
 
     async loadNextAction() {
@@ -129,10 +136,12 @@ export default class AgregarVenta extends Init {
                 if (commonProductsWithFormula.length != 0 || !Object.isEmpty(this.glassesItem)) {
                     this.commonProductsWithFormula = commonProductsWithFormula;
                     await this.loadThirdStep();
-                    this.nextAction();
+
+                    this.skipThirdStep = false;
                 } else {
-                    this.nextAction(1);
+                    this.skipThirdStep = true;
                 }
+                this.nextAction();
 
             } else {
                 alert('No ha seleccionado ningún producto')
@@ -169,6 +178,34 @@ export default class AgregarVenta extends Init {
         })
     }
 
+    previousAction() {
+        document.querySelectorAll('.previous.action_button').forEach(b => {
+            b.addEventListener('click', e => {
+                if(this.step == 4 && this.skipThirdStep) this.step--; 
+                this.step--;
+                document.querySelector('.slider').style.right = `calc(100% * ${this.step - 1})`;
+                this.hiderOrShowBigSteps();
+            })
+        })
+    }
+
+    hiderOrShowBigSteps() {
+        const previousClientData = document.querySelectorAll('.show_client_data');
+
+        console.log(this.step);
+        switch (this.step) {
+            case 3: 
+                this.thirdStepContainer.classList.remove('display_none')
+                break;
+            case 5:
+                if (previousClientData.length !== 0) previousClientData.forEach(cD => cD.classList.remove('display_none'));
+                break;
+            default:
+                if (previousClientData.length !== 0) previousClientData.forEach(cD => cD.classList.add('display_none'));
+                this.thirdStepContainer.classList.add('display_none')
+        }
+    }
+
     async loadProducButtons() {
         this.products = await ProductController.getAll();
         const container = document.querySelector('.products_button__container')
@@ -191,6 +228,15 @@ export default class AgregarVenta extends Init {
     }
 
     async loadFifthStep() {
+        const previousClientData = document.querySelectorAll('.show_client_data');
+
+        if (previousClientData.length !== 0) previousClientData.forEach(cD => cD.remove());
+
+        const clientFormulaContainer = document.querySelector('#client_formula_data');
+        const productData = document.querySelector('#products_data__table');
+
+        productData.innerHTML = '';
+
         let clientes = []
         if (this.clientUsed) {
             const telefono = this.clientData.telefono;
@@ -211,7 +257,6 @@ export default class AgregarVenta extends Init {
         }
 
         const clientData = await new ShowClientData(this.clientData).loadComponent();
-        const clientFormulaContainer = document.querySelector('#client_formula_data');
         clientFormulaContainer.append(clientData.component.shadowRoot);
 
         if (Array.isArray(clientes)) {
@@ -223,7 +268,6 @@ export default class AgregarVenta extends Init {
             }
         }
 
-        const productData = document.querySelector('#products_data__table');
 
         if (!Object.isEmpty(this.commonItem)) {
             for (const i in this.commonItem) {
@@ -252,7 +296,7 @@ export default class AgregarVenta extends Init {
             
             if (result) {
                 alert("Se ha introducido la compra correctamente");
-                window.location = '/panel_principal';
+                //window.location = '/ventas';
             } else {
                 alert("Algo ha salido mal, recargue e intentelo de nuevo");
             }
@@ -261,6 +305,11 @@ export default class AgregarVenta extends Init {
 
     async loadThirdStep() {
         document.querySelector('#client_name').innerText = this.clientData?.nombres;
+        if (!this.thirdStepAlreadyRendered) this.renderThirdStep();
+    }
+    
+     async renderThirdStep() {
+        this.thirdStepAlreadyRendered = true;
         const firstFormFormula = await new FormFormula(this, this.formFormulaId, true).loadComponent();
 
         this.loadCheckbox(firstFormFormula);
@@ -282,6 +331,7 @@ export default class AgregarVenta extends Init {
     async secondStep() {
         document.querySelector('#second_step').addEventListener('submit', e => {
             e.preventDefault();
+            this.products = [];
 
             const productIds = document.querySelectorAll("input[name='producto_id']");
             const productPrices = document.querySelectorAll("input[name='precio']");
@@ -338,5 +388,8 @@ export default class AgregarVenta extends Init {
         this.loadProducButtons();
         this.loadHeader();
         this.loadNextAction();
+        this.previousAction();
+
+        this.thirdStepContainer = document.querySelector('#third_step');
     }
 }

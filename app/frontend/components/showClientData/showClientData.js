@@ -7,13 +7,12 @@ export default class ShowClientData extends Component {
 
     beforeLoad() {
         const clientKeys = Object.keys(this.context);
-        const formulaKeys = Object.keys(this.context.formula);
-
+        const formulaKeys = this.context.formula ? Object.keys(this.context.formula) : false;
+        
         this.component.shadowRoot.querySelectorAll('td').forEach(e => {
             const name = e.getAttribute('name');
-
+            
             if (clientKeys.some(k => k === name)) e.innerText = this.context[name];
-                
         })
 
         if (Array.isArray(formulaKeys)) {
@@ -38,6 +37,8 @@ export default class ShowClientData extends Component {
                 }
                     
             })
+        } else {
+            this.DOMComponent.querySelector('.formula_data').remove();
         }
     }
 }

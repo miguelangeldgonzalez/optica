@@ -16,6 +16,7 @@ header nav {
     
 }
 header ul {
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -25,7 +26,7 @@ header ul {
 header ul li a {
     color: var(--black);
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 header nav img {
@@ -54,41 +55,25 @@ header nav img {
     
 }
 
-.user-menu__container {
-    position: absolute;
-    right: 1%;
-    top: 110%;
-    border-radius: 20px;
-    transition: 0.3s;
-    /*animation-name: show_menu;*/
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
-    overflow: hidden;
-    width: 170px;
-}
-
-.menu_open {
-    height: 105%;
-}
-
-.menu_close {
-    height: 0;
-    border: none;
-}
-
-.user-menu__container ul {
-    align-items: flex-start;
-    position: absolute;
-    padding: 0;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-}
-.li-menu__container {
+.menu__container {
     position: relative;
 }
 
-.user-menu__container ul li a {
-    font-size: 1rem;
-    font-weight: bold;
+.user-menu__container {
+    position: absolute;
+    right: 10%;
+    top: 16%;
+    border-radius: 6px;
+    background-color: white;
+    border: 1px solid black;
+    padding: 8px;
 }
+
+.user-menu__container ul {
+    display: flex;
+    flex-flow: column;
+    text-align: left;
+    padding: 0;
+    align-items: flex-start;
+}
+

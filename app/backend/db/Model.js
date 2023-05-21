@@ -48,6 +48,10 @@ export default class Model {
         }).then(data => data.json());
     }
 
+    async constructWhere() {
+        
+    }
+
     async #execQuery (query) {
         const data = {
             query
@@ -100,8 +104,35 @@ export default class Model {
         return this.#execQuery(`SELECT * FROM ${this.tableName} WHERE ${this.primaryKey.name} = ${id}`);
     }
 
-    findAll() {
-        return this.#execQuery(`SELECT * FROM ${this.tableName}`);
+    async #setAssociation(include, values) {
+        let sourceKey;
+
+        for (const i of include) {
+            sourceKey = this.columns.filter(c => c.name.includes(i.primaryKey.name))[0].name;
+            
+            if (!sourceKey) throw new Error(`La tabla ${i.tableName} no comparte niguna relacion con ${i.tableName}`);
+            
+            for (const index in values) {
+                const id = values[index][sourceKey];
+                console.log(i);
+                values[index][i.tableName] = await i.findByPk(id);
+
+                delete values[index][sourceKey]
+            }
+        }
+
+        return values;
+    }
+
+    async findAll(options = {}) {
+        const values = await this.#execQuery(`SELECT * FROM ${this.tableName}`);
+
+        if (options.include) {
+            return this.#setAssociation(options.include, values)
+        } else {
+            return values;
+        }
+
     }
 
     delete (id) {

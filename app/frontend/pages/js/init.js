@@ -34,4 +34,6 @@ export default class Init extends DOMLoader {
             console.error(err);
         }
     }
+
+    async load() {}
 }

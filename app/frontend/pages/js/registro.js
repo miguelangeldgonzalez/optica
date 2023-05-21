@@ -17,7 +17,7 @@ export default class Registro extends Init {
             const session = await UserController.startSession(data);
 
             if(session) {
-                window.location = '/panel_principal';
+                window.location = '/ventas';
             } else {
                 alert('Usuario o contraseña no valido');
             }
@@ -74,7 +74,7 @@ export default class Registro extends Init {
                 }
             }
 
-            if(!error) window.location = '/panel_principal';
+            if(!error) window.location = '/ventas';
         })
     }
 
@@ -111,6 +111,10 @@ export default class Registro extends Init {
     }
 
     load() {
+        UserController.recoverSession().then(user => {
+            if (user) window.location = '/ventas';
+        })
+        
         this.loginButton = document.querySelector('#login_button');
         this.loginForm = document.querySelector('.form_login__container');
         this.loginFormButton = document.querySelector('#login_form_button');

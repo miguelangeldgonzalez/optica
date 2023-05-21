@@ -1,0 +1,13 @@
+.panel__container {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 70% 30%;
+}
+.panel__sales {
+    grid-column: 1;
+    border: 1px solid red;
+}
+.panel__stats {
+    grid-column: 2;
+    border: 1px solid blue;
+}

@@ -1,20 +1,18 @@
-import Test from './test.js';
-
 export default class VentasController {
     static async create(data) {
         let clientePagadorId = null
-        
 
         if (!data.data_cliente.cliente_id) {
-            const result = globalThis.models.clientes.create({
+            const result = await globalThis.models.clientes.create({
                 ...data.data_cliente
             })
-            clientePagadorId = result.cliente_id;
+
+            clientePagadorId = result[0].cliente_id;
         } else {
             clientePagadorId = data.data_cliente.cliente_id;
         }
 
-        const venta = globalThis.models.ventas.create({
+        const venta = await globalThis.models.ventas.create({
             cliente_id: clientePagadorId
         })
 
@@ -31,7 +29,7 @@ export default class VentasController {
 
         if (!Object.isEmpty(data.glassesItem)) {
             for (const g in data.glassesItem) {
-                const lente = globalThis.models.lentes.create({
+                const lente = await globalThis.models.lentes.create({
                     venta_id: venta.venta_id
                 });
 
@@ -79,5 +77,14 @@ export default class VentasController {
         })
 
         return true;
+    }
+
+    static async getSalesResume() {
+        const result = await globalThis.models.ventas.findAll({
+            include: [
+                globalThis.models.clientes
+            ]
+        });
+        console.log(result);
     }
 }

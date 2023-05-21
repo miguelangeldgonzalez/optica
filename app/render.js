@@ -28,6 +28,7 @@ export class Render {
         document.querySelector("body").innerHTML = await pageModule.getContent();
         
         if(pageModule.load) await pageModule.load();
+        if(pageModule.afterLoad) await pageModule.afterLoad();
     }
 
     static loadPage(pages) {
