@@ -25,6 +25,10 @@ export default class UserController {
         return false;
     }
 
+    static async delete(id) {
+        await UserService.delete(id);
+    }
+
     static closeSession() {
         UserService.closeSession();
     }

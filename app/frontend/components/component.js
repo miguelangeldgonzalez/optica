@@ -1,19 +1,24 @@
 import DOMLoader from "../pages/js/DOMLoader.js";
 
 export default class Component extends DOMLoader {
-    constructor (context, componentName='') {
+    constructor (context, componentName='', options={}) {
         super();
         this.context = context;
         const name = this.constructor.name;
         this.name = name[0].toLowerCase() + name.substring(1);
 
         this.componentName = !!componentName ? componentName : this.name ;
+        const href = `./app/frontend/components/${this.name}/${this.name}.css`;
         
-        const link = document.createElement('link');
-        link.setAttribute('rel', 'stylesheet');
-        link.setAttribute('href', `./app/frontend/components/${this.name}/${this.name}.css`);
+        const link = document.querySelector(`link[href='${href}']`);
 
-        document.querySelector('head').append(link)
+        if (!link && !options.dontLink) {
+            const link = document.createElement('link');
+            link.setAttribute('rel', 'stylesheet');
+            link.setAttribute('href', href);
+    
+            document.querySelector('head').append(link)
+        }
     }
     
     async loadComponent() {

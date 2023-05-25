@@ -83,3 +83,14 @@ main {
 .label_error {
     transition: .3s;
 }
+
+.action_button {
+    align-self: center;
+    background: #70028B;
+    border: 3px solid #B8961F;
+    box-shadow: 0px 0px 25px rgba(112, 2, 139, 0.25);
+    border-radius: 30px;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: var(--white-text)
+}

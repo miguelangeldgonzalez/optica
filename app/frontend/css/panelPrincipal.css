@@ -10,4 +10,13 @@
 .panel__stats {
     grid-column: 2;
     border: 1px solid blue;
+    flex-direction: column;
+    margin-top: 30px;
+    position: relative;
+}
+.panel__fixed {
+    width: 30%;
+    position: fixed;
+    display: flex;
+    justify-content: center;
 }

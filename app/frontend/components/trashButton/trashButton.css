@@ -1,0 +1,18 @@
+.trash_button__container {
+    position: relative;
+}
+
+.trash_button__container img {
+    width: 15px;
+    height: 15px;
+}
+
+.trash_top {
+    position: absolute;
+    top: -10px;
+    transition: .4s;    
+}
+
+.trash_button__container:hover .trash_top {
+    transform: translateY(-3px);
+}

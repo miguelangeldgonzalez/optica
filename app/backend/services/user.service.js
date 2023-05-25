@@ -1,9 +1,6 @@
-import usersModel from "../models/users.model.js";
-import Model from "../db/Model.js";
-
 export default class UserService {
     static async create(data) {
-        const user = await usersModel.create(data);
+        const user = await globalThis.models.usuarios.create(data);
 
         if (Array.isArray(user)) return user[0]
         else return user;
@@ -30,6 +27,6 @@ export default class UserService {
     
     static searchByEmail(email) {
         const query = `SELECT * FROM usuarios WHERE correo = '${email}'`;
-        return globalThis.Model.execQuery(query, usersModel)
+        return globalThis.Model.execQuery(query, globalThis.models.usuarios)
     }
 }

@@ -1,5 +1,6 @@
 export default class VentasController {
     static async create(data) {
+        console.log(data);
         let clientePagadorId = null
 
         if (!data.data_cliente.cliente_id) {
@@ -7,7 +8,8 @@ export default class VentasController {
                 ...data.data_cliente
             })
 
-            clientePagadorId = result[0].cliente_id;
+            console.log(result);
+            clientePagadorId = result.cliente_id;
         } else {
             clientePagadorId = data.data_cliente.cliente_id;
         }
@@ -37,6 +39,7 @@ export default class VentasController {
                     globalThis.models.parte_lentes.create({
                         lente_id: lente.lente_id,
                         producto_id: data.glassesItem[g][i].producto_id,
+                        precio: data.glassesItem[g][i].precio
                     })
                 }
             }
@@ -79,12 +82,85 @@ export default class VentasController {
         return true;
     }
 
-    static async getSalesResume() {
+    static async getSalesResume(id= null) {
+        let where = {};
+
+        if (id) where.venta_id = id;
+
         const result = await globalThis.models.ventas.findAll({
+            where,
             include: [
-                globalThis.models.clientes
-            ]
+                new globalThis.Association(
+                    globalThis.models.clientes,
+                    {
+                        as: 'cliente'
+                    }
+                ),
+                new globalThis.Association(
+                    globalThis.models.lentes,
+                    {
+                        as: 'lentes',
+                        type: 'ONE_TO_MANY',
+                        weakEntity: true,
+                        include: [
+                            new globalThis.Association(
+                                globalThis.models.estados,
+                                {
+                                    as: 'estado'
+                                }
+                            ),
+                            new globalThis.Association(
+                                globalThis.models.parte_lentes,
+                                {
+                                    weakEntity: true,
+                                    type: 'ONE_TO_MANY',
+                                    include: [
+                                        new globalThis.Association(
+                                            globalThis.models.productos,
+                                            {
+                                                as: 'producto'
+                                            }
+                                        )
+                                    ]
+                                }
+                            )
+                        ]
+                    }
+                ),
+                new globalThis.Association(
+                    globalThis.models.ventas_productos,
+                    {
+                        weakEntity: true,
+                        type: 'ONE_TO_MANY',
+                        include: [
+                            new globalThis.Association(
+                                globalThis.models.productos
+                            )
+                        ]
+                    }
+                )
+            ],
+            order: {
+                columns: ['fecha'],
+                desc: true
+            }
         });
-        console.log(result);
+        
+        for (const r of result) {
+            let total = 0;
+            if (Array.isArray(r.ventas_productos)) {
+                r.ventas_productos.forEach(p => total += p.precio);
+            }
+
+            if (Array.isArray(r.lentes)) {
+                r.lentes.forEach(l => {
+                    if(Array.isArray(l.parte_lentes)) l.parte_lentes.forEach(pl => total += pl.precio)
+                });
+            }
+
+            r.total = total;
+        }
+
+        return result;
     }
 }

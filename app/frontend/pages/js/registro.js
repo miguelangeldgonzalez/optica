@@ -112,7 +112,7 @@ export default class Registro extends Init {
 
     load() {
         UserController.recoverSession().then(user => {
-            if (user) window.location = '/ventas';
+            if (user.length != 0) window.location = '/ventas';
         })
         
         this.loginButton = document.querySelector('#login_button');

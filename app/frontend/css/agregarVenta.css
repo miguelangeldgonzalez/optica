@@ -38,16 +38,6 @@
     border-radius: 10px;
 }
 
-.action_button {
-    align-self: center;
-    background: #70028B;
-    border: 3px solid #B8961F;
-    box-shadow: 0px 0px 25px rgba(112, 2, 139, 0.25);
-    border-radius: 30px;
-    padding: 10px 20px;
-    color: var(--white-text)
-}
-
 #products_table {
     margin: 45px 0;
     width: 100%;

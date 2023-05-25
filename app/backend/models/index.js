@@ -1,4 +1,4 @@
-import Model from "../db/Model.js";
+import { Model } from "../db/Model.js";
 
 function convertToJSType(type) {
     switch (type) {
@@ -9,6 +9,8 @@ function convertToJSType(type) {
             return 'boolean';
         case 'varchar':
             return 'string';
+        case 'date':
+            return 'date';
         default:
             return 'unknwon';
     }

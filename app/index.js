@@ -1,22 +1,24 @@
 import { Render } from "./render.js";
 
-import Model from "./backend/db/Model.js";
+import { Model, Association } from "./backend/db/Model.js";
 import Init from "./frontend/pages/js/init.js";
 import Component from "./frontend/components/component.js";
 
-import UserController from "./backend/controllers/user.controller.js";
 
 globalThis.env = 'DEV';
 globalThis.Init = Init;
 globalThis.Model = Model;
 globalThis.Component = Component;
+globalThis.Association = Association;
 
+import Users from "./frontend/pages/js/users.js";
 import LoadModels from "./backend/models/index.js";
 import NotFound from "./frontend/pages/js/notFound.js";
 import Registro from "./frontend/pages/js/registro.js";
+import DetalleVenta from "./frontend/pages/js/detalleVenta.js";
 import AgregarVenta from "./frontend/pages/js/agregarVenta.js";
-import PanelPrincipal from "./frontend/pages/js/panelPrincipal.js";
 import Configuration from "./frontend/pages/js/configuration.js";
+import PanelPrincipal from "./frontend/pages/js/panelPrincipal.js";
 
 const pages = [
     {
@@ -34,6 +36,14 @@ const pages = [
     {
         route: '/configuracion',
         module: new Configuration()
+    },
+    {
+        route: '/detalle_de_venta',
+        module: new DetalleVenta()
+    },
+    {
+        route: '/usuarios',
+        module: new Users()
     },
     {
         route: '/404',
@@ -63,14 +73,17 @@ FormData.extractFromObject = data => {
     return object;
 }
 
-Object.isEmpty = o => JSON.stringify(o) == '{}' ? true : false;
+Object.isEmpty = o => JSON.stringify(o) === '{}' ? true : false;
 
+window.getParameterByName = (name) => {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 window.addEventListener('load', async () => {
     await LoadModels();
-
-    const users = UserController.getAllUsers();
-    console.log(users);
-
-    Render.loadPage(pages)}
-);
+    console.log('hola');
+    Render.loadPage(pages)
+});

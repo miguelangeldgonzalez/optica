@@ -1,3 +1,37 @@
-.card__cotainer {
-    
+.card__container {
+    border: 4px solid #B8961FCC;
+    border-radius: 8px;
+    width: 70%;
+    margin: 20px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.card__title_delete a {
+    display: flex;
+    flex-direction: column;
+    position: relative
+}
+
+.card__title_delete img {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+}
+.trash_top {
+    top: -10px;
+    transition: .4s;    
+}
+
+.card__title_delete a:hover .trash_top {
+    transform: translateY(-3px);
+}
+
+.card__info table {
+    width: 100%;
+}
+
+.card__title {
+    display: flex;
+    justify-content: space-between;
 }

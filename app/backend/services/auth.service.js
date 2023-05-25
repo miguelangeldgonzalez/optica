@@ -1,4 +1,4 @@
-import Model from '../db/Model.js'; 
+import { Model } from '../db/Model.js'; 
 
 export default class AuthService {
     static async startSessionWithId(id) {
