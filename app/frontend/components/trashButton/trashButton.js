@@ -1,4 +1,4 @@
-import Component from "../component.js";
+
 
 export default class TrashButton extends Component {
     constructor(context) {

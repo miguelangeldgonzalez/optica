@@ -1,4 +1,4 @@
-import Component from "../component.js";
+
 
 import StateCircle from "../stateCircle/stateCircle.js";
 
@@ -14,33 +14,20 @@ export default class SaleCard extends Component {
 
         const stateContainer = this.component.shadowRoot.querySelector(`td[name='estado']`);
 
-        if(Array.isArray(this.context.estados) && this.context.estados.length !== 0) {
-            for (const e of this.context.estados) {
-                const stateCircle = await new StateCircle({
-                    nombre_estado: e.nombre_estado,
-                    color: e.color
-                }).loadComponent();
+        console.log(this.context.estado_global);
+        const stateCircle = await new StateCircle(this.context.estado_global).loadComponent();
+        stateContainer.append(stateCircle.component);
 
-                stateContainer.append(stateCircle.component);
+        const link = '/detalle_de_venta?id=' + this.context.venta_id
+
+        this.component.shadowRoot.querySelector('#card__title_link').setAttribute('href', link)
+
+        this.component.shadowRoot.querySelector('#delete_button').addEventListener('click', async e => {
+            if(confirm('¿Esta seguro que desea eliminar la venta?')) {
+                await globalThis.models.ventas.delete(this.context.venta_id);
+                location.reload();
             }
-        } else {
-            const e = await globalThis.models.estados.findAll({
-                where: {
-                    por_defecto: true
-                }
-            })
-
-            const stateCircle = await new StateCircle({
-                nombre_estado: e[0].nombre_estado,
-                color: e[0].color
-            }).loadComponent();
-
-            stateContainer.append(stateCircle.component);
-        }
-
-        this.component.shadowRoot.querySelector('.card__container').onclick = e => {
-            window.location = '/detalle_de_venta?id=' + this.context.venta_id
-        }
+        })
     }
 
 }

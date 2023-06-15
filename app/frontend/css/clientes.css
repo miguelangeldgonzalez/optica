@@ -1,0 +1,21 @@
+h2, table {
+    margin: 20px auto;
+}
+
+table {
+    width: 90%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #efe692;
+}
+
+td, th{
+    padding: 4px;
+    text-align: center;
+}
+
+tr:nth-child(odd) {
+    background-color: #f7f3c9;
+}

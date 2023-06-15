@@ -56,6 +56,8 @@
 .products_button__container {
     margin-top: 30px;
     width: 100%;
+    flex-wrap: wrap;
+    gap: 15px;
     display: flex;
     justify-content: space-around;
 }
@@ -142,4 +144,15 @@ casos añadiendo thead, tbody, etc. */
   
 .formula_data tr:last-child td, .formula_data tr:last-child th {
     border-bottom: var(--border-table) solid transparent;
+}
+
+#search_dni__container {
+    position: relative;
+}
+
+#search_dni {
+    position: absolute;
+    align-self: flex-end;
+    top: 51%;
+    cursor: pointer;
 }

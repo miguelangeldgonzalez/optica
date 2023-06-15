@@ -3,12 +3,13 @@
 
         <div class="slider">
             <!-- Primer Paso -->
-            <div class="form_step">
+            <div class="form_step" step_id="1">
                 <h2>Ingresa la información del cliente</h2>
     
                 <form id="first_step">
-                    <div class="form_group">
+                    <div class="form_group" id="search_dni__container">
                         <label>Numero de Cedula</label>
+                        <img src="./app/frontend/assets/icons/magnifying_glass.svg" id="search_dni">
                         <input type="text" class="information_button only_numbers" name="cedula" required>
                     </div>
     
@@ -29,7 +30,7 @@
             </div>
     
             <!-- Segundo Paso -->
-            <div class="form_step">
+            <div class="form_step" step_id="2">
                 <h2>Ingresa la Compra del Cliente</h2>
     
                 <form id="second_step">
@@ -51,7 +52,7 @@
             </div>
     
             <!-- Tercer Paso -->
-            <div class="form_step">
+            <div class="form_step" step_id="3">
                 <h2>Ingresa Información de la Formula</h2>
 
                 <label>
@@ -72,7 +73,7 @@
             </div>
 
             <!-- Cuarto Paso -->
-            <div class="form_step">
+            <div class="form_step" step_id="4">
                 <h2>Ingresar Pago</h2>
 
                 <form id="fourth_step">
@@ -103,7 +104,7 @@
             </div>
 
             <!-- Quinto Paso -->
-            <div class="form_step">
+            <div class="form_step" step_id="5">
                 <h2>Corroborar Información de la Compra</h2>
 
                 <div id="client_formula_data">

@@ -16,7 +16,7 @@ export default class ProductItem extends Component {
                 
                 this.data[index].precio = +e.target.value;
                 this.data[index].nombre = e.target.getAttribute('nombre') || this.context.button.value;
-
+                
                 if(!this.data[index].necesita_formula) this.data[index].necesita_formula = e.target.getAttribute('necesita_formula');
 
                 if (this.common) {
@@ -68,7 +68,7 @@ export default class ProductItem extends Component {
     loadCommon() {
         this.id = this.context.parentContext.getCommonItemID();
         const producto_id = this.context.button.getAttribute('productid');
-        const necesita_formula = this.context.button.getAttribute('necesita_formula') == "1" ? true : false;
+        const necesita_formula = this.context.button.getAttribute('necesita_formula') == "true" ? true : false;
         this.DOMComponent.querySelector('#product_name').innerText = this.context.button.value;
         this.DOMComponent.querySelector("input[name='precio']").setAttribute('producto_id', producto_id);
 

@@ -1,4 +1,3 @@
-import Init from './init.js';
 import Header from '../../components/header/header.js';
 import UserRow from '../../components/userRow/userRow.js';
 import UserController from '../../../backend/controllers/user.controller.js';

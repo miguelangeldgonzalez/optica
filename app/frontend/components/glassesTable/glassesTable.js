@@ -1,4 +1,4 @@
-import Component from "../component.js";
+
 import GlassesRow from "../glassesRow/glassesRow.js";
 
 export default class GlassesTable extends Component {

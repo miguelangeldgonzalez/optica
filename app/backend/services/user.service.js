@@ -1,5 +1,15 @@
 export default class UserService {
     static async create(data) {
+        console.log(data);
+
+        const password = await fetch('./app/backend/services/php/crypt.php', {
+            method: 'POST',
+            body: JSON.stringify({
+                password: data.password
+            })
+        }).then(data => data.text());
+
+        data.password = password;
         const user = await globalThis.models.usuarios.create(data);
 
         if (Array.isArray(user)) return user[0]
@@ -28,5 +38,15 @@ export default class UserService {
     static searchByEmail(email) {
         const query = `SELECT * FROM usuarios WHERE correo = '${email}'`;
         return globalThis.Model.execQuery(query, globalThis.models.usuarios)
+    }
+
+    static verifyPassword(password, passwordCrypted) {
+        return fetch('./app/backend/services/php/verify_password.php', {
+            method: 'POST',
+            body: JSON.stringify({
+                password: password,
+                password_crypted: passwordCrypted
+            })
+        }).then(data => data.text());
     }
 }

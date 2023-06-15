@@ -1,0 +1,27 @@
+#buttons > * {
+    cursor: pointer;
+}
+a{
+    color: black;
+}
+#buttons a {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    color: black;
+}
+#buttons .trash_button__container .trash_top {
+    top: -5px;
+}
+
+#buttons {
+    height: 2rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+#edit_button img {
+    height: 15px;
+    cursor: pointer;
+}

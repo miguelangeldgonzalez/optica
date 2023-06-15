@@ -1,3 +1,6 @@
+h2 {
+    margin: 20px;
+}
 .panel__container {
     display: grid;
     width: 100%;
@@ -5,11 +8,9 @@
 }
 .panel__sales {
     grid-column: 1;
-    border: 1px solid red;
 }
 .panel__stats {
     grid-column: 2;
-    border: 1px solid blue;
     flex-direction: column;
     margin-top: 30px;
     position: relative;
@@ -17,6 +18,25 @@
 .panel__fixed {
     width: 30%;
     position: fixed;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: 40% 40% 20%;
+    height: 70vh;
+}
+
+.panel__fixed .pie-char__container {
+    grid-row: 1;
+}
+.panel__fixed .pie-char__container canvas {
+    height: 100%!important;
+    width: calc(100vh * 0.3)!important;
+    margin: 0 auto;
+}
+
+.panel__fixed .bar-chart__container {
+    grid-row: 2;
+}
+.panel__fixed button {
+    grid-row: 3;
+    width: 50%;
+    margin: 0 auto;
 }

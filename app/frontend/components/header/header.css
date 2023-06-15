@@ -67,6 +67,7 @@ header nav img {
     background-color: white;
     border: 1px solid black;
     padding: 8px;
+    z-index: 1;
 }
 
 .user-menu__container ul {

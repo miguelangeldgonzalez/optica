@@ -1,0 +1,46 @@
+.formula_list__background {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    background-color: rgba(0, 0, 0, .4);
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.formula_selector__container {
+    width: 80%;
+    background-color: white;
+    margin-top: 30%;
+    padding: 10px;
+}
+
+.formula_list__background h2, .formula_list__background table {
+    margin: 20px auto;
+}
+
+.formula_list__background table {
+    width: 90%;
+    border-collapse: collapse;
+}
+
+.formula_list__background th {
+    background-color: #efe692;
+}
+
+.formula_list__background td, .formula_list__background th{
+    padding: 4px;
+}
+
+.formula_list__background tr {
+    text-align: center;
+}
+
+.formula_list__background tr:nth-child(even) {
+    background-color: #f7f3c9;
+}
+
+.formula_list__background tr .action_button {
+    padding: 5px 8px;
+}

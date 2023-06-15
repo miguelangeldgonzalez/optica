@@ -1,4 +1,4 @@
-import Component from "../component.js";
+
 
 export default class ShowClientData extends Component {
     constructor(context) {

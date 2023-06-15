@@ -1,24 +1,21 @@
 import { Render } from "./render.js";
 
 import { Model, Association } from "./backend/db/Model.js";
-import Init from "./frontend/pages/js/init.js";
-import Component from "./frontend/components/component.js";
-
 
 globalThis.env = 'DEV';
-globalThis.Init = Init;
 globalThis.Model = Model;
-globalThis.Component = Component;
 globalThis.Association = Association;
 
 import Users from "./frontend/pages/js/users.js";
 import LoadModels from "./backend/models/index.js";
+import Clientes from "./frontend/pages/js/clientes.js";
 import NotFound from "./frontend/pages/js/notFound.js";
 import Registro from "./frontend/pages/js/registro.js";
 import DetalleVenta from "./frontend/pages/js/detalleVenta.js";
-import AgregarVenta from "./frontend/pages/js/agregarVenta.js";
 import Configuration from "./frontend/pages/js/configuration.js";
+import DetalleCliente from "./frontend/pages/js/detalleCliente.js";
 import PanelPrincipal from "./frontend/pages/js/panelPrincipal.js";
+import AgregarVenta from "./frontend/pages/js/agregarVenta/agregarVenta.js";
 
 const pages = [
     {
@@ -48,6 +45,14 @@ const pages = [
     {
         route: '/404',
         module: new NotFound()
+    },
+    {
+        route: '/clientes',
+        module: new Clientes()
+    },
+    {
+        route: '/detalle_cliente',
+        module: new DetalleCliente()
     }
 ]
 

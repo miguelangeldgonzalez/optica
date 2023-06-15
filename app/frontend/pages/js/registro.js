@@ -1,5 +1,3 @@
-import Init from "./init.js";
-
 import UserController from "../../../backend/controllers/user.controller.js";
 
 export default class Registro extends Init {

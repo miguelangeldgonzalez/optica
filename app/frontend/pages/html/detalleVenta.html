@@ -1,6 +1,37 @@
 <main>
-    <div class="client_information"></div>
-    <div class="products_information">
-        
+    <div class="client_information__container">
+        <div class="client_information__top">
+            <p>ID: <span class="client_data" name="cliente_id"></span></p>
+        </div>
+
+        <div class="client_information__name">
+            <h2 class="client_data" name="nombres"></h2>
+        </div>
+
+        <div class="client_information__data">
+            <div class="client_information__group">
+                <h2>Número de Cedula</h2>
+                <span name="cedula" class="client_data"></span>
+            </div>
+            <div class="client_information__group">
+                <h2>Número de Telefono</h2>
+                <span name="telefono" class="client_data"></span>
+            </div>
+            <div class="client_information__group">
+                <h2>Fecha de Nacimiento</h2>
+                <span name="fecha_nacimiento" class="client_data"></span>
+            </div>
+            <div class="client_information__group">
+                <h2>Sexo</h2>
+                <span name="sexo" class="client_data"></span>
+            </div>
+        </div>
     </div>
+
+    <button class="action_button edit" id="edit_client">Editar Información del Cliente</button>
+    
+    <div class="products_information">
+    </div>
+
+    <span>Total <span id="total"></span>$</span>
 </main>

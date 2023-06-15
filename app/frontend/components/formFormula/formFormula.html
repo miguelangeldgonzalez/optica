@@ -2,7 +2,11 @@
     <input type="button" class="delete_form_formula display_none" value="x">
     <div class="form_group">
         <label>Numero de cedula</label>
-        <input type="text" name="cedula" class="information_button client_data only_numbers" required>
+        <div class="form_group" id="search_dni__container" style="width: 100%">
+            <label>Numero de Cedula</label>
+            <img src="./app/frontend/assets/icons/magnifying_glass.svg" id="search_dni">
+            <input type="text" name="cedula" class="information_button client_data only_numbers" required>
+        </div>
     </div>
     
     <div class="form_group">
@@ -33,28 +37,28 @@
 
         <tr>
             <th>Ojo Derecho</th>
-            <td><input type="number" name="esferico_ojo_derecho" required></td>
-            <td><input type="number" name="cilindro_ojo_derecho" required></td>
-            <td><input type="number" name="eje_ojo_derecho" required></td>
-            <td><input type="number" name="adicion_ojo_derecho" required></td>
+            <td><input type="number" class="client_data" name="esferico_ojo_derecho" required></td>
+            <td><input type="number" class="client_data" name="cilindro_ojo_derecho" required></td>
+            <td><input type="number" class="client_data" name="eje_ojo_derecho" required></td>
+            <td><input type="number" class="client_data" name="adicion_ojo_derecho" required></td>
         </tr>
 
         <tr>
             <th>Ojo Izquierdo</th>
-            <td><input type="number" name="esferico_ojo_izquierdo" required></td>
-            <td><input type="number" name="cilindro_ojo_izquierdo" required></td>
-            <td><input type="number" name="eje_ojo_izquierdo" required></td>
-            <td><input type="number" name="adicion_ojo_izquierdo" required></td>
+            <td><input type="number" class="client_data" name="esferico_ojo_izquierdo" required></td>
+            <td><input type="number" class="client_data" name="cilindro_ojo_izquierdo" required></td>
+            <td><input type="number" class="client_data" name="eje_ojo_izquierdo" required></td>
+            <td><input type="number" class="client_data" name="adicion_ojo_izquierdo" required></td>
         </tr>
 
         <tr>
             <th colspan="3">Distancia Pupilar</th>
-            <td colspan="2"><input type="number" name="distancia_pupilar" required></td>
+            <td colspan="2"><input type="number" class="client_data" name="distancia_pupilar" required></td>
         </tr>
 
         <tr>
             <th colspan="3">¿Es Progresivo?</th>
-            <td colspan="2"><input type="checkbox" name="es_progresivo"></td>
+            <td colspan="2"><input type="checkbox" class="client_data" name="es_progresivo"></td>
         </tr>
     </table>
 

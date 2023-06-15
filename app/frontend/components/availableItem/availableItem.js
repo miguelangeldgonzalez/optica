@@ -1,5 +1,3 @@
-import Component from "../component.js";
-
 export default class AvailableItem extends Component {
     constructor(context) {
         super(context, 'availale-item');

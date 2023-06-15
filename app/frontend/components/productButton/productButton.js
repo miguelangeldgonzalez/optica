@@ -1,4 +1,4 @@
-import Component from "../component.js";
+
 import ProductItem from "../productItem/productItem.js";
 
 export default class ProductButton extends Component {

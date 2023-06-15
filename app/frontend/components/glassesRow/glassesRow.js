@@ -1,4 +1,4 @@
-import Component from "../component.js";
+
 
 export default class GlassesRow extends Component {
     constructor(context) {

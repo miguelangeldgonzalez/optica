@@ -20,26 +20,43 @@ export default class VentasController {
 
         if (!Object.isEmpty(data.commonItem)) {
             for (const i in data.commonItem) {
+                let estado_id = 2;
+                if(data.commonItem[i].producto_id == 1) estado_id = 1;
+                console.log({
+                    estado_id
+                })
+
                 globalThis.models.ventas_productos.create({
                     venta_id: venta.venta_id,
                     producto_id: data.commonItem[i].producto_id,
-                    precio: data.commonItem[i].precio
+                    precio: data.commonItem[i].precio,
+                    estado_id
                 })
             }
         }
 
+        const e = await globalThis.models.estados.findAll({
+            where: {
+                por_defecto: true
+            }
+        })
 
         if (!Object.isEmpty(data.glassesItem)) {
             for (const g in data.glassesItem) {
                 const lente = await globalThis.models.lentes.create({
-                    venta_id: venta.venta_id
+                    venta_id: venta.venta_id,
+                    estado_id: 2
                 });
 
                 for (const i in data.glassesItem[g]) {
+                    let estado_id = 2;
+                    if (data.glassesItem[g][i].producto_id == 1)  estado_id = 1
+
                     globalThis.models.parte_lentes.create({
                         lente_id: lente.lente_id,
                         producto_id: data.glassesItem[g][i].producto_id,
-                        precio: data.glassesItem[g][i].precio
+                        precio: data.glassesItem[g][i].precio,
+                        estado_id
                     })
                 }
             }
@@ -82,10 +99,11 @@ export default class VentasController {
         return true;
     }
 
-    static async getSalesResume(id= null) {
+    static async getSalesResume(params) {
         let where = {};
 
-        if (id) where.venta_id = id;
+        if (params?.venta_id) where.venta_id = params.venta_id;
+        if (params?.cliente_id) where.cliente_id = params.cliente_id;
 
         const result = await globalThis.models.ventas.findAll({
             where,
@@ -120,11 +138,25 @@ export default class VentasController {
                                             {
                                                 as: 'producto'
                                             }
+                                        ),
+                                        new globalThis.Association(
+                                            globalThis.models.estados,
+                                            {
+                                                as: 'estado'
+                                            }
                                         )
                                     ]
                                 }
                             )
                         ]
+                    }
+                ),
+                new globalThis.Association(
+                    globalThis.models.pagos,
+                    {
+                        as: 'pagos',
+                        type: 'ONE_TO_MANY',
+                        weakEntity: true
                     }
                 ),
                 new globalThis.Association(
@@ -134,7 +166,16 @@ export default class VentasController {
                         type: 'ONE_TO_MANY',
                         include: [
                             new globalThis.Association(
-                                globalThis.models.productos
+                                globalThis.models.productos,
+                                {
+                                    as: 'producto'
+                                }
+                            ),
+                            new globalThis.Association(
+                                globalThis.models.estados,
+                                {
+                                    as: 'estado'
+                                }
                             )
                         ]
                     }
@@ -147,6 +188,7 @@ export default class VentasController {
         });
         
         for (const r of result) {
+            //Set Total
             let total = 0;
             if (Array.isArray(r.ventas_productos)) {
                 r.ventas_productos.forEach(p => total += p.precio);
@@ -158,9 +200,44 @@ export default class VentasController {
                 });
             }
 
+            //Search at least one pending
+            let estado_id = 2;
+            if(r.ventas_productos.length >= 1) {
+                for(const vp of r.ventas_productos) {
+                    if(vp.estado?.estado_id == 1) {
+                        estado_id = 1;
+                        break;
+                    }
+
+                }
+            }
+
+            if (r.lentes.length >= 1 && estado_id != 2) {
+                for (const l of r.lentes) {
+                    let stop = false;
+
+                    for(const pl of l.parte_lentes) {
+                        if(pl.estado?.estado_id == 1) {
+                            estado_id = 1;
+                            stop = true;
+                            break;
+                        }
+                    }
+
+                    if(stop) break;
+                }
+            }
+
+            const estado_global = await globalThis.models.estados.findByPk(estado_id)
+
+            r.estado_global = estado_global[0]
             r.total = total;
         }
 
         return result;
+    }
+
+    static async getStats() {
+        
     }
 }

@@ -87,7 +87,8 @@ export class Model {
         let query = 'WHERE ';
 
         for (const key in where) {
-            query += `${key} = ${where[key]} AND`
+            const value = typeof where[key] === 'number' ? where[key] : `'${where[key]}'`
+            query += `${key} = ${value} AND`
         }
 
         return query.substring(0, query.length -4);
@@ -127,6 +128,8 @@ export class Model {
 
             data.table_name = this.tableName;
             data.primary_key = this.primaryKey.name;
+        } else if (query.match(/(DELETE)/)) {
+            data.delete = true;
         }
         
         console.log(query);
@@ -140,15 +143,18 @@ export class Model {
             for (const key in result[i]) {
                 const column = this.columns.filter(c => c.name === key);
 
-                switch (column[0].type) {
-                    case 'number':
-                        result[i][key] = result[i][key].includes('.') ? parseFloat(result[i][key]) : parseInt(result[i][key]); 
-                        break;
-                    case 'date':
-                        result[i][key] = new Date(result[i][key]);
-                        break;
-                    case 'boolean':
-                        result[i][key] = result[i][key] === '1' ? true : false;
+                if (result[i][key]) {
+                    switch (column[0].type) {
+                        case 'number':
+                            result[i][key] = result[i][key].includes('.') ? parseFloat(result[i][key]) : parseInt(result[i][key]); 
+                            break;
+                        case 'timestamp':
+                        case 'date':
+                            result[i][key] = new Date(result[i][key]);
+                            break;
+                        case 'boolean':
+                            result[i][key] = result[i][key] === '1' ? true : false;
+                    }
                 }
             }
         }
@@ -198,8 +204,10 @@ export class Model {
             if (!(i instanceof Association)) throw new Error('Las asociaciones deben ser una instancia de la clase Association');
 
             let sourceKeyProperty = i.weakEntity ? i.model : this;
-            
+
             sourceKey = sourceKeyProperty.columns.filter(c => c.name.includes(i.model.primaryKey.name))[0]?.name;
+
+            if (i.hasForeighKey) sourceKey = this.primaryKey.name;
             
             if (!sourceKey) throw new Error(`La tabla ${this.tableName} no comparte niguna relacion con ${i.model.tableName}`);
             
@@ -209,7 +217,7 @@ export class Model {
 
                 switch (i.type) {
                     case 'ONE_TO_ONE':
-                        const id = values[index][sourceKey];
+                        const id = values[index][sourceKey] || values[sourceKey];
                         result = await i.model.findByPk(id);
                         result = result[0]
                         break;
@@ -247,6 +255,21 @@ export class Model {
             return values;
         }
 
+    }
+
+    update(id, data) {
+        const set = this.#onlyValidColumns(data);
+        let query = `UPDATE ${this.tableName} SET `;
+
+        for (const column in set) {
+            const value = typeof set[column] === 'number' ? set[column] : `'${set[column]}'`;
+
+            query += `${column} = ${value}, `
+        }
+
+        query = query.substring(0, query.length -2) + ` WHERE ${this.primaryKey.name} = ${id}`;
+        
+        return this.#execQuery(query);
     }
 
     delete (id) {

@@ -43,7 +43,10 @@ try {
         $result = mysqli_query($LINK, "SELECT * FROM $table_name WHERE $where");
     }
     
-    $result = $result->fetch_all(MYSQLI_ASSOC);
+    if (!array_key_exists('delete', $_POST)) {
+        $result = $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     print_r(json_encode(utf8ize($result)));
 
 } catch (ValueError | Exception $e) {
