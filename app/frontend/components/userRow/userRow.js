@@ -14,7 +14,7 @@ export default class UserRow extends Component {
 
         if (confirm(message)) {
             console.log(usuario.usuario_id);
-            //await UserController.delete(usuario.usuario_id);
+            await globalThis.models.usuarios.delete(usuario.usuario_id);
             location.reload();
         }
 

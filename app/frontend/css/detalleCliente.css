@@ -38,3 +38,21 @@
     flex-direction: column;
     text-align: center;
 }
+
+#cards__container h2 {
+    margin: 0 auto;
+    display: block;
+    width: fit-content;
+    margin-bottom: 40px;
+}
+#cards__container .card__container {
+    margin: 0 auto
+}
+
+#cards__container {
+    padding-bottom: 40px; 
+}
+
+img {
+    cursor: pointer;
+}

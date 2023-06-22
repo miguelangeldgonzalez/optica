@@ -1,25 +1,19 @@
-.common_products__container {
-    margin: 0 auto;
-    margin-bottom: 40px;
-    border-radius: 5px;
-    border: 3px solid #812299;
-    width: 70%;
-}
-
-#common_products {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-#common_products td {
-    text-align: center;
+#payment-table__last-row {
+    display: grid;
+    grid-template-columns: 70% 30%;
     padding: 5px;
 }
 
-#common_products td img {
-    cursor: pointer;
+#add_payment {
+    grid-column: 1 / 1;
+    width: 150px;
 }
 
-#common_products tr:nth-child(even) {
-    background-color: #EEE6F0;
+.commo-products__total_payment {
+    grid-column: 2 / 2;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    align-items: center;
+    flex-wrap: nowrap;
 }

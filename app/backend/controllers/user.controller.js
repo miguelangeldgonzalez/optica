@@ -22,13 +22,27 @@ export default class UserController {
         
         if(user.length == 0) return false
 
-
+        if (data.password == user[0]?.temporal_password) {
+            await UserService.startSession(user[0]);
+            await globalThis.models.usuarios.update(user[0].usuario_id, {
+                temporal_password: null
+            })
+            return {
+                started: true,
+                temporal_password: true,
+                usuario_id: user[0].usuario_id
+            };
+        }
         const valid = await UserService.verifyPassword(data.password, user[0]?.password)
         
-        if(!valid) return false;
+        if(!valid) return {
+            started: false
+        };
 
         await UserService.startSession(user[0]);
-        return true;
+        return {
+            started: true
+        };
     }
 
     static async delete(id) {

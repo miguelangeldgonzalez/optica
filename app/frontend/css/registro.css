@@ -2,6 +2,10 @@ body {
     background-image: url('./../assets/background.png');
 }
 
+#reset_password {
+    cursor: pointer
+}
+
 .form_input {
     background: none;
     outline: 1px solid var(--white-text);
@@ -96,7 +100,7 @@ main > * {
 
 form > .form_input[type=submit] {
     width: 200px;
-    margin-top: 60px;
+    margin-top: 20px;
     align-self: center;
 }
 
@@ -108,7 +112,7 @@ hr {
 }
 
 .form_login__container {
-    transform: translateY(140%);
+    transform: translateY(129%);
 }
 .form_singup__container .form_input[type=button] {
     margin-top: 30px;

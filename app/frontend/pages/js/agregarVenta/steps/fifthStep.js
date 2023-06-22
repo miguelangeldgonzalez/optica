@@ -6,8 +6,6 @@ import ShowClientData from '../../../../components/showClientData/showClientData
 import ProductItemSale from '../../../../components/productItemSale/productItemSale.js';
 
 export default async function fifthStep(event) {
-
-
     switch (event) {
         case stepEvents.PRELOAD_STEP: 
             const previousClientData = document.querySelectorAll('.show_client_data');
@@ -68,10 +66,9 @@ export default async function fifthStep(event) {
             document.querySelector('#show_total').innerText = this.total;
 
             document.querySelector('#end').addEventListener('click', async e => {
-                const data_cliente = this.clientAlreadyExists ? this.clientAlreadyExists : this.clientData;
                 const result = await VentasController.create({
                     clientes,
-                    data_cliente,
+                    data_cliente: this.clientData || this.clientAlreadyExists,
                     commonItem: this.commonItem,
                     glassesItem: this.glassesItem,
                     payment: this.paymentData

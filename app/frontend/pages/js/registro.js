@@ -1,4 +1,5 @@
 import UserController from "../../../backend/controllers/user.controller.js";
+import ChangePassword from "../../components/changePassword/changePassword.js";
 
 export default class Registro extends Init {
     singUpActive = true;
@@ -14,8 +15,15 @@ export default class Registro extends Init {
             const data = FormData.extractFromElement('#login_form');
             const session = await UserController.startSession(data);
 
-            if(session) {
+            if(session.started && !session.temporal_password) {
                 window.location = '/ventas';
+            } else if(session.started) {
+                const cp = await new ChangePassword(session.usuario_id).loadComponent();
+                if (cp) {
+                    //window.location = '/ventas'
+                } else {
+                    await UserController.closeSession();
+                }
             } else {
                 alert('Usuario o contraseña no valido');
             }
@@ -123,6 +131,51 @@ export default class Registro extends Init {
 
         this.labelErrorUsername = document.querySelector('#label_error_username');
         this.labelErrorPassword = document.querySelector('#label_error_password');
+
+        document.querySelector('#reset_password').addEventListener('click', async e => {
+            const email = document.querySelector("#login_form > input:nth-child(2)").value;
+
+            if(email) {
+                const usuario = await globalThis.models.usuarios.findAll({
+                    where: {
+                        correo: email
+                    }
+                })
+
+                console.log(usuario);
+                if(usuario.length >= 0) {
+                    const temporal_password = Math.ceil(Math.random() * 1000000);
+
+                    const data = {
+                        correo: email,
+                        temporal_password
+                    }
+
+                    await globalThis.models.usuarios.update(usuario[0].usuario_id, {
+                        temporal_password
+                    })
+
+                    let result = await fetch('./app/backend/db/php/mail.php', {
+                        method: 'POST',
+                        body: JSON.stringify(data)
+                    }) 
+                    .then(data => data.text())
+                    .catch(err => {
+                        alert("El correo no se ha enviado, puede que los administradores del sistema aún no hallan habilitado el correo")
+                    })
+
+
+                    if(result == 'true') {
+                        alert('Correo enviado correctamente');
+                    } else {
+                        alert("El correo no se ha enviado, puede que los administradores del sistema aún no hallan habilitado el correo")
+
+                    }
+                }
+            } else {
+                alert('Ingresa tu correo en el formulario')
+            }
+        })
 
         this.loginOrSingUp();
         this.singUp();

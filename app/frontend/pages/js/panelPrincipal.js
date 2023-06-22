@@ -2,7 +2,10 @@ import Header from "../../components/header/header.js";
 import UserController from "../../../backend/controllers/user.controller.js";
 import VentasController from "../../../backend/controllers/ventas.controller.js";
 
+import getCurrency from "../../../utilities/currency.js";
+
 import SaleCard from "../../components/saleCard/saleCard.js";
+import crons from "../../../utilities/cron.js";
 
 export default class PanelPrincipal extends Init{
     constructor() {
@@ -55,18 +58,16 @@ export default class PanelPrincipal extends Init{
     }
 
     async afterLoad() {
+        crons()
         this.ventas = await VentasController.getSalesResume();
         const main = document.querySelector('.panel__sales');
-
+        let bsPrice = await getCurrency();
+        
         if (this.ventas.length > 0)  {
             for (const v of this.ventas) {
-                
                 const saleCard = await new SaleCard({
-                    total: v.total,
-                    cliente: v.cliente,
-                    fecha: v.fecha,
-                    venta_id: v.venta_id,
-                    estado_global: v.estado_global
+                    ...v,
+                    bsPrice
                 }).loadComponent()
                 
                 main.append(saleCard.component.shadowRoot);

@@ -6,8 +6,12 @@ export default class ItemProductTable extends Component {
     }
 
     async beforeLoad() {
-        console.log(this.context)
         const name = this.context.producto.nombre;
+        if (this.context?.bsPrice) {
+            this.component.shadowRoot.querySelector('.bs_price__value').innerText = this.context.bsPrice * this.context.precio;
+        } else {
+            this.component.shadowRoot.querySelector('.bs_price__container').remove()
+        }
 
         this.component.shadowRoot.querySelector('#product_name').innerText = this.context.producto.nombre;
         this.component.shadowRoot.querySelector('#price').innerText = this.context.precio;
@@ -16,6 +20,41 @@ export default class ItemProductTable extends Component {
 
         if (name === 'Cristal') {
             const stateCircle = await new StateCircle(this.context.estado).loadComponent();
+            let cliente;
+            let parteFormulas;
+
+            if (this.context.isGlassesItem) {
+                
+            } else {
+                parteFormulas = await globalThis.models.partes_formulas.findAll({
+                    where: {
+                        ventas_productos_id: this.context.ventas_productos_id
+                    },
+                    include: [
+                        new globalThis.Association(
+                            globalThis.models.formulas,
+                            {
+                                as: 'formula'
+                            }
+                        )
+                    ]
+                })
+
+            }
+            
+            if(parteFormulas.length >= 0) {
+                cliente = await globalThis.models.clientes.findByPk(parteFormulas[0].formula.cliente_id);
+                if(cliente.length >= 0) cliente = cliente[0]
+            }
+            
+            if (cliente) {
+                this.component.shadowRoot.querySelector('#client_name').innerText = cliente.nombres
+                this.component.shadowRoot.querySelector('.client_link').setAttribute('href', `/detalle_cliente?cliente_id=${cliente.cliente_id}`);
+            } else {
+                this.component.shadowRoot.querySelector('.client_name__container').remove();
+            }
+
+
             this.component.shadowRoot.querySelector('#state').append(stateCircle.component);
 
             editButton.addEventListener('click', async e => {
@@ -26,7 +65,11 @@ export default class ItemProductTable extends Component {
                     newEstadoId = 1;
                 }
 
-                await globalThis.models.ventas_productos.update(this.context.ventas_productos_id, {
+                let model = this.context.isGlassesItem ? 
+                    globalThis.models.parte_lentes :
+                    globalThis.models.ventas_productos;
+
+                await model.update(this.context.ventas_productos_id, {
                     estado_id: newEstadoId
                 })
 

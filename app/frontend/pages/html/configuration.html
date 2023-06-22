@@ -1,0 +1,53 @@
+<main>
+    <h2>Configuración</h2>
+
+    <div class="backup__container">
+        <h3>Respaldo</h3>
+        <p>Puedes generar un respaldo de la base de datos para evitar perdida de información y volver a cargar el respaldo cuando quieras.</p>
+
+        <div class="backup_table__container">
+            <table id="backup_table">
+                <tr> 
+                    <th colspan="2">Respaldo</th>
+                </tr>
+            </table>
+        </div>
+        
+        <button id="generate_backup" class="action_button">Generar Respaldo</button>
+    </div>
+
+    <div class="currency_key">
+        <h3>Conversión a Bolivares</h3>
+        <p>El software siempre intentará mostrar el precio en bolivares pero para activar la carga automatizada del precio en bolivares siga estos pasos:</p>
+
+        <ul>
+            <li>Registrese <a href="https://app.exchangerate-api.com/sign-in">ExchangeRate API</a> para poder automatizar el calculo del precio</li>
+            <li>Una vez registrado valla a <a href="https://app.exchangerate-api.com/keys">API Keys</a> y copie el codigo que aparece en el sitio.</li>
+        </ul>
+
+        <img src="app\frontend\assets\api_tutorial_1.png">
+
+        <ul>
+            <li>
+                <span>A continuación pegue el codigo en el cuadro: </span>
+                <input type="text" id="key_value"> <button id="key_button" class="action_button">Aceptar</button>
+            </li>
+        </ul>
+    </div>
+
+    <p class="report">
+        <h3>Generar Reportes</h3>
+        <p>Generar el reporte desde <input type="date" id="start_date"> hasta <input type="date" id="end_date">
+        <button id="generate_report" class="action_button">Generar</button> </p>
+    </div>
+    
+    <div class="currency_key google">
+        <h3>Habilitar el Correo Para el Cambio de Contraseñas</h3>
+        <ul>
+            <li>Para habilitar el correo para cambio de contraseñas dirijase al apartado de <a href="https://myaccount.google.com/apppasswords">Contraseñas de Aplicaciones</a> de su cuenta de google.</li>
+            <li>Seleccione estas dos opciones y luego presione generar: </li>
+            <img src="app\frontend\assets\tutorial_google_1.png" alt=""><img src="app\frontend\assets\tutorial_google_2.png" alt="">
+            <li>Por ultimo copie el codigo que aparecerá en el recuadro amarillo e ingrese su correo Gmail al que esta asociado y la contraseña de aplicacion <input type="text" placeholder="Correo" id="email"><input type="text" placeholder="Contraseña de Aplicacion" id="email_code"><button id="email_button" class="action_button">Aceptar</button></li>
+        </ul>
+    </div>
+</main>

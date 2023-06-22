@@ -124,28 +124,11 @@ class AgregarVenta extends Init {
     
 
     async load() {
-        const id = window.getParameterByName('venta_id');
-        const editMode = window.getParameterByName('edit_mode');
-
-        const venta = await VentasController.getSalesResume({
-            venta_id: parseInt(id)
-        });
-
-        
         await this.loadHeader()
         await this.loadChangeStepActions();
         await this.previousAction();
         
         this.thirdStepContainer = document.querySelector('#third_step');
-
-        if(venta.length >= 1 && editMode == 'true') {
-            this.editMode = true;
-            this.venta = venta[0];
-
-            console.log(this.venta);
-
-            this.loadEditionMode();
-        } 
     }
 }
 

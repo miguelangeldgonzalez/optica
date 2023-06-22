@@ -89,13 +89,13 @@ export default async function secondStep(event) {
         document.querySelector('#total_value').innerText = this.total;
 
         if (!Object.isEmpty(this.glassesItem) || !Object.isEmpty(this.commonItem)) {
-            let commonProductsWithFormula = [];
+            let commonProductsWithFormula = {};
 
             for (const i in this.commonItem) {
-                if(this.commonItem[i].necesita_formula) commonProductsWithFormula.push(this.commonItem[i]);
+                if(this.commonItem[i].necesita_formula) commonProductsWithFormula[i] = this.commonItem[i];
             }
 
-            if (commonProductsWithFormula.length != 0) {
+            if (!Object.isEmpty(commonProductsWithFormula)) {
                 this.commonProductsWithFormula = commonProductsWithFormula;
             }
         } else {

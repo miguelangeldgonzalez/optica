@@ -78,6 +78,24 @@ export class Model {
             body: JSON.stringify(data)
         }).then(data => data.json());
 
+        /**
+         * Ajusta los tipos de la query
+         */
+        if (Array.isArray(result)) for (const r of result) {
+            for(const p in r) {
+                if (r[p]) {
+                    if (!r[p].match(/\w*[a-zA-Z]\w*/)) {
+                        if (r[p].includes('-')) {
+                            r[p] = new Date(r[p]);
+                        } else {
+                            r[p] = +r[p]
+                        }
+                    }
+                }
+            }
+        }
+
+        console.log(query);
         return returnOne ? result[0] : result;
     }
 
@@ -232,7 +250,10 @@ export class Model {
                 if (i.include) await i.model.constructAssociation(i.include, result);
 
                 values[index][tableName] = result;
-                delete values[index][sourceKey]
+
+                // Yo no se porque añadi esto pero me esta fregando la vida
+                // sin embargo no lo borro porque puede ser importante
+                //delete values[index][sourceKey]
             }
         }
 

@@ -4,9 +4,12 @@ export default class ItemPaymentTable extends Component {
     }
 
     async beforeLoad() {
-        console.log(this.context);
-
         if(!this.context.insertMode) {
+            if (this.context?.bsPrice) {
+                this.component.shadowRoot.querySelector('.bs_price__value').innerText = this.context.bsPrice * this.context.cantidad;
+            } else {
+                this.component.shadowRoot.querySelector('.bs_price__container').remove()
+            }
             this.component.shadowRoot.querySelector('.insert_mode').remove();
 
             this.component.shadowRoot.querySelector('#product_name').innerText = this.context.metodo_pago;

@@ -1,8 +1,11 @@
 import Header from "../../components/header/header.js";
+import SaleCard from "../../components/saleCard/saleCard.js";
 import TrashButton from "../../components/trashButton/trashButton.js";
 
 import UserController from "../../../backend/controllers/user.controller.js";
 import VentasController from "../../../backend/controllers/ventas.controller.js";
+
+import getCurrency from "../../../utilities/currency.js";
 
 export default class DetalleCliente extends Init {
     constructor() {
@@ -44,7 +47,15 @@ export default class DetalleCliente extends Init {
 
     async loadSaleTable() {
         const sale = await VentasController.getSalesResume({cliente_id: this.client.cliente_id});
-        console.log(sale);
+        this.bsPrice = await getCurrency();
+        for (const s of sale) {
+            const card = await new SaleCard({
+                ...s,
+                bsPrice: this.bsPrice,
+                hideName: true
+            }).loadComponent();
+            document.querySelector('#cards__container').append(card.component.shadowRoot);
+        }
     }
 
     async load() {
@@ -71,6 +82,6 @@ export default class DetalleCliente extends Init {
             onclick: this.trashOnClick
         }).loadComponent();
 
-        document.querySelector('.client_information__top').append(trashButton.component.shadowRoot);
+        document.querySelector('#buttons').append(trashButton.component.shadowRoot);
     }
 }

@@ -93,6 +93,11 @@ export default class FormFormula extends Component {
         this.loadDelete()
         this.loadAvailable()
     }
+
+    async reloadAvailables() {
+        document.querySelectorAll(`div[form_id='${this.id}'] .available_items label`).forEach(l => l.remove());
+        await this.loadAvailable();
+    }
     
     getData() {
         const clientData = {};

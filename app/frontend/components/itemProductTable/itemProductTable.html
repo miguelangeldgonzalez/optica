@@ -1,8 +1,23 @@
 <tr>
-    <td id="product_name"></td>
+    <td>
+        <div class="name__container">
+            <span id="product_name"></span>
+            <span class="client_name__container">
+                <a class="client_link">
+                    <b>Cliente: </b> <span id="client_name"></span>
+                </a>
+            </span>
+        </div>
+    </td>
     <td id="state" style="
         display: flex;
         justify-content: center;
     "><img class="edit_button" src="./app/frontend/assets/icons/pencil_icon.svg"></td>
-    <td id="price"></td>
+    <td>
+        <span>
+            <span id="price"></span>
+            $
+        </span>
+        <span class="bs_price__container"> | <span class="bs_price__value"></span>Bs</span>
+    </td>
 </tr>

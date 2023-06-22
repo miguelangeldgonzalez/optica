@@ -10,6 +10,7 @@ export default class Users extends Init {
     async load() {
         this.user = await UserController.recoverSession();
         if (Array.isArray(this.user)) window.location = '/';
+        if (this.user.rol !== 'ADMINISTRADOR') window.location = '/';
 
         const header = await new Header(this).loadComponent();
         document.querySelector('main').before(header.component.shadowRoot);

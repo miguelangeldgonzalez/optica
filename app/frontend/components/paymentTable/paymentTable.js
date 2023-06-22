@@ -8,15 +8,26 @@ export default class PaymentTable extends Component {
     async beforeLoad() {
         const table = this.component.shadowRoot.querySelector('table');
         
-        for (const item of this.context) {
-            const itemTable = await new ItemPaymentTable(item).loadComponent()
+        for (const item of this.context.pagos) {
+            const itemTable = await new ItemPaymentTable({
+                ...item,
+                bsPrice: this.context.bsPrice
+            }).loadComponent()
             table.append(itemTable.component.shadowRoot);
         }
 
         let addPaymentCreated = false;
 
-        const total = parseInt(document.querySelector('#total').innerText);
-        const totalPayment = this.context.reduce((a, b) => b.cantidad + a, 0);
+        const total = parseInt(document.querySelector('#total-value-global').innerText);
+        const totalPayment = this.context.pagos.reduce((a, b) => b.cantidad + a, 0);
+
+        this.component.shadowRoot.querySelector('#total-value').innerText = totalPayment;
+
+        if (this.context?.bsPrice) {
+            this.component.shadowRoot.querySelector('.commo-products__total_payment .bs_price__value').innerText = this.context.bsPrice * totalPayment;
+        } else {
+            this.component.shadowRoot.querySelector('.bs_price__container').remove()
+        }
 
         if(totalPayment < total) {
             this.component.shadowRoot.querySelector('button').addEventListener('click', async e => {
@@ -41,7 +52,7 @@ export default class PaymentTable extends Component {
                             })
     
                             const payment = {
-                                venta_id: this.context[0].venta_id
+                                venta_id: this.context.pagos[0].venta_id
                             };
     
                             for (const i of inputs) {

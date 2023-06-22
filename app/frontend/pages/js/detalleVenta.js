@@ -1,35 +1,24 @@
 import Header from "../../components/header/header.js";
 import TrashButton from "../../components/trashButton/trashButton.js";
 import PaymentTable from "../../components/paymentTable/paymentTable.js";
-import CommonProductsTable from "../../components/commonProductsTable/commonProductsTable.js";
+import ProductsTable from "../../components/productsTable/productsTable.js";
 
 import UserController from "../../../backend/controllers/user.controller.js";
 import VentasController from "../../../backend/controllers/ventas.controller.js";
 
-import GlassesTable from "../../components/glassesTable/glassesTable.js";
+import getCurrency from "../../../utilities/currency.js";
 
 export default class DetalleVenta extends Init {
     constructor() {
         super();
     }
 
-    async loadGlassesInformation() {
-        for (const lente of this.venta.lentes) {
-            const glassesTable = await new CommonProductsTable(lente.parte_lentes).loadComponent();
-            document.querySelector('.products_information').append(glassesTable.component);
-        }
-
-    }
-
     async loadProductInformation() {
-        if(this.venta.lentes.length !== 0) {
-            this.loadGlassesInformation()
-        }
-
-        if(this.venta.ventas_productos.length !== 0) {
-            const table = await new CommonProductsTable(this.venta.ventas_productos).loadComponent();
-            document.querySelector('.products_information').append(table.component.shadowRoot);
-        }
+        const table = await new ProductsTable({
+            ...this.venta,
+            bsPrice: this.bsPrice
+        }).loadComponent();
+        document.querySelector('.products_information').append(table.component.shadowRoot);
     }
 
     async trashOnClick(e, context) {
@@ -69,10 +58,11 @@ export default class DetalleVenta extends Init {
     }
 
     async loadPaymentInformation() {
-        document.querySelector('#total').innerText = this.venta.total;
-
-        const paymentTable = await new PaymentTable(this.venta.pagos).loadComponent();
-        document.querySelector('.products_information').after(paymentTable.component.shadowRoot);
+        const paymentTable = await new PaymentTable({
+            bsPrice: this.bsPrice,
+            pagos: this.venta.pagos
+        }).loadComponent();
+        document.querySelector('.payment_information').append(paymentTable.component.shadowRoot);
     }
     
     async load() {
@@ -83,10 +73,13 @@ export default class DetalleVenta extends Init {
         document.querySelector('main').before(header.component.shadowRoot);
         header.afterLoad();
 
+        this.bsPrice = await getCurrency();
+
+
         const id = window.getParameterByName('id');
 
         
-        const venta = await VentasController.getSalesResume({
+        const venta = await VentasController.getSaleById({
             venta_id: parseInt(id)
         });
         if (venta.length === 0) window.location = '/ventas';
@@ -102,10 +95,11 @@ export default class DetalleVenta extends Init {
         this.venta = venta[0];
 
         this.loadClientInformation();
-        this.loadProductInformation();
+        await this.loadProductInformation();
         this.loadPaymentInformation();
 
         this.main = document.querySelector('main');
+
         console.log(this);
     }
 }

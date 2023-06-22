@@ -16,6 +16,7 @@ function utf8ize($d) {
 $_POST = json_decode(trim(file_get_contents("php://input")), true);
 
 $query = '';
+$result;
 
 if(array_key_exists('query', $_POST)) $query = $_POST['query'];
 try {

@@ -92,3 +92,9 @@ window.addEventListener('load', async () => {
     console.log('hola');
     Render.loadPage(pages)
 });
+
+Array.isArrayAndNotEmpty = (array) => {
+    if(!Array.isArray(array)) return false;
+    if(array.length < 1) return false;
+    return true;
+}

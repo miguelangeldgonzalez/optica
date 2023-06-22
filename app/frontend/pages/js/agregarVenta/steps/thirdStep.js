@@ -79,6 +79,7 @@ export default async function thirdStep(event) {
             this.skipThirdStep = false;
             document.querySelector('#client_name').innerText = this.clientData?.nombres;
             if (!this.thirdStepAlreadyRendered) await this.renderThirdStep();
+            else this.formFormula.forEach(async f => await f.reloadAvailables());
         }
 
     }
