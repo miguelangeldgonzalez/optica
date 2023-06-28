@@ -20,7 +20,7 @@ export default class Registro extends Init {
             } else if(session.started) {
                 const cp = await new ChangePassword(session.usuario_id).loadComponent();
                 if (cp) {
-                    //window.location = '/ventas'
+                    window.location = '/ventas';
                 } else {
                     await UserController.closeSession();
                 }

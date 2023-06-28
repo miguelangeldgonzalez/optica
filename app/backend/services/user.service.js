@@ -1,6 +1,9 @@
 export default class UserService {
     static async create(data) {
-        console.log(data);
+        const result = await globalThis.Model.execQuery(`SELECT COUNT(usuario_id) as count from usuarios`);
+        if(result[0].count == 0) {
+            data.rol = 'ADMINISTRADOR'
+        }
 
         const password = await fetch('./app/backend/services/php/crypt.php', {
             method: 'POST',
